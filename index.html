@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Tennis Board</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0f0d;
+      --bg2:       #151a16;
+      --bg3:       #1d2420;
+      --green:     #4ade80;
+      --green-dim: #166534;
+      --green-mid: #22c55e;
+      --text:      #eef2ef;
+      --muted:     #8a968d;
+      --border:    #242d25;
+      --red:       #f87171;
+      --yellow:    #fbbf24;
+      --radius:    14px;
+      --font:      -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      max-width: 500px;
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      padding: 18px 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.3px;
+    }
+    .conn-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green  { background: var(--green-mid); }
+    .dot-yellow { background: var(--yellow); }
+    .dot-red    { background: var(--red); }
+
+    /* ---- Nav ---- */
+    .nav {
+      display: flex;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      margin-top: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn {
+      flex: none;
+      padding: 12px 15px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: var(--font);
+    }
+    .nav-btn.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    /* ---- Pages ---- */
+    .page { display: none; padding: 14px 14px 0; }
+    .page.active { display: block; }
+
+    /* ---- Cards ---- */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* ---- Forms ---- */
+    .form-group { margin-bottom: 12px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .input {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-family: var(--font);
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    .input:focus { outline: none; border-color: var(--green-mid); }
+    .input::placeholder { color: var(--muted); }
+
+    /* ---- Segment buttons ---- */
+    .seg {
+      display: flex;
+      gap: 6px;
+    }
+    .seg-btn {
+      flex: 1;
+      padding: 9px 6px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      font-family: var(--font);
+    }
+    .seg-btn.on {
+      background: var(--green-dim);
+      border-color: var(--green-mid);
+      color: #fff;
+    }
+
+    /* ---- Set scores ---- */
+    .set-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .set-row:last-child { margin-bottom: 0; }
+    .set-lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      width: 38px;
+      flex-shrink: 0;
+    }
+    .score-inp {
+      flex: 1;
+      padding: 9px 4px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      font-family: var(--font);
+      transition: border-color 0.15s;
+    }
+    .score-inp:focus { outline: none; border-color: var(--green-mid); }
+    .score-sep { color: var(--muted); font-size: 0.75rem; }
+
+    /* ---- Winner banner ---- */
+    .winner-banner {
+      display: none;
+      padding: 10px 12px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid var(--green-dim);
+      border-radius: 9px;
+      color: var(--green);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    /* ---- Feeling buttons ---- */
+    .feeling-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .feel-btn {
+      padding: 7px 11px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+    .feel-btn.on {
+      border-color: var(--green-mid);
+      color: var(--green);
+      background: rgba(34,197,94,0.08);
+    }
+
+    /* ---- Primary / secondary buttons ---- */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: opacity 0.15s, transform 0.1s;
+      text-align: center;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-sm {
+      display: inline-block;
+      width: auto;
+      padding: 7px 13px;
+      font-size: 0.78rem;
+      border-radius: 8px;
+    }
+    .btn-danger {
+      background: transparent;
+      color: var(--red);
+      border: 1px solid rgba(248,113,113,0.4);
+    }
+
+    /* ---- Two-col ---- */
+    .two-col { display: flex; gap: 8px; }
+    .two-col > * { flex: 1; min-width: 0; }
+
+    /* ---- Section header ---- */
+    .sec-head {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin: 14px 0 8px;
+    }
+
+    /* ---- Stats row ---- */
+    .stats-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-card {
+      flex: 1;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ---- Session history card ---- */
+    .session-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 14px;
+      margin-bottom: 10px;
+    }
+    .session-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .session-players { font-weight: 600; font-size: 0.9rem; }
+    .session-date    { font-size: 0.75rem; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      background: var(--bg3);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .chip-win {
+      background: var(--green-dim);
+      color: #a7f3c0;
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .session-feels {
+      margin-top: 7px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ---- Racket / String cards ---- */
+    .rack-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 14px;
+      margin-bottom: 10px;
+    }
+    .rack-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .rack-name   { font-weight: 600; font-size: 0.92rem; }
+    .rack-player { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .rack-string { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .progress-wrap {
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+    .p-green  { background: var(--green-mid); }
+    .p-yellow { background: var(--yellow); }
+    .p-red    { background: var(--red); }
+    .rack-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .rack-hrs  { font-size: 0.8rem; color: var(--muted); }
+    .rack-hrs b { color: var(--text); }
+    .rack-actions { display: flex; gap: 6px; }
+
+    /* ---- Alert ---- */
+    .alert {
+      padding: 10px 12px;
+      border-radius: 9px;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .alert-warn {
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.3);
+      color: var(--yellow);
+    }
+    .alert-ok {
+      background: rgba(34,197,94,0.08);
+      border: 1px solid var(--green-dim);
+      color: var(--green);
+    }
+
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 11px 20px;
+      border-radius: 20px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      z-index: 999;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.ok  { border-color: var(--green-mid); color: var(--green); }
+    .toast.err { border-color: var(--red); color: var(--red); }
+
+    /* ---- Empty / loading ---- */
+    .empty {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .empty-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .loading {
+      text-align: center;
+      padding: 36px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    /* ---- Spacer ---- */
+    .spacer { height: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-title">🎾 Tennis Board</div>
+  <div class="conn-badge" id="connBadge">
+    <span class="dot dot-yellow" id="connDot"></span>
+    <span id="connText">Not connected</span>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <button class="nav-btn active" data-page="log">Log Session</button>
+  <button class="nav-btn" data-page="history">History</button>
+  <button class="nav-btn" data-page="strings">Strings</button>
+  <button class="nav-btn" data-page="rackets">Rackets</button>
+  <button class="nav-btn" data-page="settings">Settings</button>
+</nav>
+
+<!-- ===================== LOG SESSION ===================== -->
+<div id="page-log" class="page active">
+
+  <div class="card">
+    <div class="card-title">Date</div>
+    <input type="date" id="sessDate" class="input">
+  </div>
+
+  <div class="card">
+    <div class="card-title">Players</div>
+
+    <div class="form-group">
+      <span class="label">Player 1</span>
+      <div class="seg" id="seg-p1">
+        <button class="seg-btn on" onclick="pickPlayer(1,'Chew',this)">Chew</button>
+        <button class="seg-btn"    onclick="pickPlayer(1,'Tan',this)">Tan</button>
+        <button class="seg-btn"    onclick="pickPlayer(1,'Other',this)">Other</button>
+      </div>
+      <input type="text" id="p1other" class="input" placeholder="Enter name…" style="display:none;margin-top:7px;">
+    </div>
+
+    <div class="form-group">
+      <span class="label">Player 2</span>
+      <div class="seg" id="seg-p2">
+        <button class="seg-btn"    onclick="pickPlayer(2,'Chew',this)">Chew</button>
+        <button class="seg-btn on" onclick="pickPlayer(2,'Tan',this)">Tan</button>
+        <button class="seg-btn"    onclick="pickPlayer(2,'Other',this)">Other</button>
+      </div>
+      <input type="text" id="p2other" class="input" placeholder="Enter name…" style="display:none;margin-top:7px;">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Match</div>
+
+    <div class="form-group">
+      <span class="label">Format</span>
+      <div class="seg" id="seg-sets">
+        <button class="seg-btn on" onclick="pickSets(2,this)">Best of 2</button>
+        <button class="seg-btn"    onclick="pickSets(3,this)">Best of 3</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <span class="label" id="scoresLabel">Scores &nbsp;<span style="font-weight:400;color:var(--muted);">Chew vs Tan</span></span>
+      <div id="setRows"></div>
+      <div class="winner-banner" id="winnerBanner"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Rackets Used</div>
+    <div class="two-col">
+      <div class="form-group">
+        <span class="label" id="rack1Lbl">Chew's Racket</span>
+        <select id="rack1Sel" class="input">
+          <option value="">Select…</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <span class="label" id="rack2Lbl">Tan's Racket</span>
+        <select id="rack2Sel" class="input">
+          <option value="">Select…</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Session Feel</div>
+    <div class="form-group">
+      <span class="label" id="feel1Lbl">Chew</span>
+      <div class="feeling-row" id="feelRow1">
+        <button class="feel-btn" onclick="pickFeel(1,'Superb',this)">🔥 Superb</button>
+        <button class="feel-btn" onclick="pickFeel(1,'Good',this)">👍 Good</button>
+        <button class="feel-btn" onclick="pickFeel(1,'Neutral',this)">😐 Neutral</button>
+        <button class="feel-btn" onclick="pickFeel(1,'Bad',this)">👎 Bad</button>
+        <button class="feel-btn" onclick="pickFeel(1,'Not my day',this)">💀 Not my day</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <span class="label" id="feel2Lbl">Tan</span>
+      <div class="feeling-row" id="feelRow2">
+        <button class="feel-btn" onclick="pickFeel(2,'Superb',this)">🔥 Superb</button>
+        <button class="feel-btn" onclick="pickFeel(2,'Good',this)">👍 Good</button>
+        <button class="feel-btn" onclick="pickFeel(2,'Neutral',this)">😐 Neutral</button>
+        <button class="feel-btn" onclick="pickFeel(2,'Bad',this)">👎 Bad</button>
+        <button class="feel-btn" onclick="pickFeel(2,'Not my day',this)">💀 Not my day</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="submitSession()">Save Session</button>
+  <div class="spacer"></div>
+</div>
+
+<!-- ===================== HISTORY ===================== -->
+<div id="page-history" class="page">
+  <div class="stats-row" id="statsRow"></div>
+  <div id="historyList"><div class="loading">Loading…</div></div>
+</div>
+
+<!-- ===================== STRINGS ===================== -->
+<div id="page-strings" class="page">
+  <div id="stringsList"><div class="loading">Loading…</div></div>
+</div>
+
+<!-- ===================== RACKETS ===================== -->
+<div id="page-rackets" class="page">
+  <div class="card">
+    <div class="card-title">Add Racket</div>
+
+    <div class="form-group">
+      <span class="label">Player</span>
+      <div class="seg" id="seg-rack-player">
+        <button class="seg-btn on" onclick="pickRackPlayer('Chew',this)">Chew</button>
+        <button class="seg-btn"    onclick="pickRackPlayer('Tan',this)">Tan</button>
+        <button class="seg-btn"    onclick="pickRackPlayer('Other',this)">Other</button>
+      </div>
+      <input type="text" id="rackPlayerOther" class="input" placeholder="Player name…" style="display:none;margin-top:7px;">
+    </div>
+    <div class="form-group">
+      <span class="label">Racket Name / Model</span>
+      <input type="text" id="rackName" class="input" placeholder="e.g. Wilson Pro Staff 97">
+    </div>
+    <div class="form-group">
+      <span class="label">String (optional)</span>
+      <input type="text" id="rackString" class="input" placeholder="e.g. Luxilon ALU Power 125">
+    </div>
+    <div class="two-col">
+      <div class="form-group">
+        <span class="label">Last Restring</span>
+        <input type="date" id="rackDate" class="input">
+      </div>
+      <div class="form-group">
+        <span class="label">Alert at (hrs)</span>
+        <input type="number" id="rackThreshold" class="input" value="20" min="1" max="999">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="doAddRacket()">Add Racket</button>
+  </div>
+
+  <div class="sec-head">Configured Rackets</div>
+  <div id="racketsList"><div class="loading">Loading…</div></div>
+</div>
+
+<!-- ===================== SETTINGS ===================== -->
+<div id="page-settings" class="page">
+  <div class="card">
+    <div class="card-title">Google Sheets Connection</div>
+    <div id="connAlert" class="alert alert-warn">Not connected — paste your Apps Script URL below.</div>
+    <div class="form-group">
+      <span class="label">Apps Script Web App URL</span>
+      <input type="url" id="scriptUrlInput" class="input" placeholder="https://script.google.com/macros/s/…/exec">
+    </div>
+    <button class="btn btn-primary" onclick="saveSettings()">Save &amp; Test</button>
+  </div>
+  <div class="card">
+    <div class="card-title">About</div>
+    <div style="font-size:0.82rem;color:var(--muted);line-height:1.7;">
+      Built for Chew &amp; Tan.<br>
+      Track scores, string hours, and session vibes.<br>
+      1 session = 2 hrs of play time.
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const S = {
+  scriptUrl : localStorage.getItem('tennisScriptUrl') || '',
+  p1        : 'Chew',
+  p2        : 'Tan',
+  sets      : 2,
+  feel1     : '',
+  feel2     : '',
+  rackPlayer: 'Chew',
+  rackets   : [],
+  sessions  : []
+};
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('page-' + btn.dataset.page).classList.add('active');
+    if (btn.dataset.page === 'history') loadHistory();
+    if (btn.dataset.page === 'strings') loadStrings();
+    if (btn.dataset.page === 'rackets') loadRackets();
+  });
+});
+
+// ============================================================
+// SHEETS API
+// ============================================================
+async function api(action, params = {}) {
+  if (!S.scriptUrl) throw new Error('No script URL');
+  const url = new URL(S.scriptUrl);
+  url.searchParams.set('action', action);
+  for (const [k, v] of Object.entries(params)) {
+    url.searchParams.set(k, typeof v === 'object' ? JSON.stringify(v) : String(v));
+  }
+  const res = await fetch(url.toString(), { redirect: 'follow' });
+  return res.json();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('sessDate').value = today;
+  document.getElementById('rackDate').value = today;
+
+  renderSetRows();
+  updateLabels();
+
+  if (S.scriptUrl) {
+    document.getElementById('scriptUrlInput').value = S.scriptUrl;
+    setConn('checking');
+    testConn();
+  }
+}
+
+async function testConn() {
+  try {
+    const res = await api('getRackets');
+    if (Array.isArray(res.rackets)) {
+      S.rackets = res.rackets;
+      setConn('ok');
+      populateRackSelects();
+      return true;
+    }
+    setConn('err'); return false;
+  } catch { setConn('err'); return false; }
+}
+
+function setConn(status) {
+  const dot  = document.getElementById('connDot');
+  const txt  = document.getElementById('connText');
+  const alrt = document.getElementById('connAlert');
+  if (status === 'ok') {
+    dot.className = 'dot dot-green';
+    txt.textContent = 'Connected';
+    if (alrt) { alrt.className = 'alert alert-ok'; alrt.textContent = '✓ Connected to Google Sheets'; }
+  } else if (status === 'checking') {
+    dot.className = 'dot dot-yellow';
+    txt.textContent = 'Connecting…';
+  } else {
+    dot.className = 'dot dot-red';
+    txt.textContent = 'Not connected';
+    if (alrt) { alrt.className = 'alert alert-warn'; alrt.textContent = 'Not connected — paste your Apps Script URL below.'; }
+  }
+}
+
+// ============================================================
+// PLAYER SELECTION
+// ============================================================
+function pickPlayer(num, val, btn) {
+  document.querySelectorAll(`#seg-p${num} .seg-btn`).forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S['p' + num] = val;
+  document.getElementById('p' + num + 'other').style.display = val === 'Other' ? 'block' : 'none';
+  updateLabels();
+  populateRackSelects();
+}
+
+function pName(num) {
+  const v = S['p' + num];
+  if (v === 'Other') return document.getElementById('p' + num + 'other').value.trim() || 'Player ' + num;
+  return v;
+}
+
+function updateLabels() {
+  const n1 = pName(1), n2 = pName(2);
+  document.getElementById('rack1Lbl').textContent  = n1 + "'s Racket";
+  document.getElementById('rack2Lbl').textContent  = n2 + "'s Racket";
+  document.getElementById('feel1Lbl').textContent  = n1;
+  document.getElementById('feel2Lbl').textContent  = n2;
+  document.getElementById('scoresLabel').innerHTML =
+    'Scores &nbsp;<span style="font-weight:400;color:var(--muted);">' + n1 + ' vs ' + n2 + '</span>';
+}
+
+// ============================================================
+// SET SCORES
+// ============================================================
+function pickSets(n, btn) {
+  document.querySelectorAll('#seg-sets .seg-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S.sets = n;
+  renderSetRows();
+}
+
+function renderSetRows() {
+  const c = document.getElementById('setRows');
+  c.innerHTML = '';
+  for (let i = 1; i <= S.sets; i++) {
+    const d = document.createElement('div');
+    d.className = 'set-row';
+    d.innerHTML = `
+      <span class="set-lbl">Set ${i}</span>
+      <input type="number" class="score-inp" id="s${i}p1" placeholder="0" min="0" max="99" oninput="calcWinner()">
+      <span class="score-sep">–</span>
+      <input type="number" class="score-inp" id="s${i}p2" placeholder="0" min="0" max="99" oninput="calcWinner()">
+    `;
+    c.appendChild(d);
+  }
+}
+
+function getScores() {
+  const scores = [];
+  for (let i = 1; i <= S.sets; i++) {
+    const p1v = document.getElementById('s' + i + 'p1');
+    const p2v = document.getElementById('s' + i + 'p2');
+    scores.push({
+      p1: p1v ? (parseInt(p1v.value) || 0) : 0,
+      p2: p2v ? (parseInt(p2v.value) || 0) : 0
+    });
+  }
+  return scores;
+}
+
+function calcWinner() {
+  const scores = getScores();
+  let w1 = 0, w2 = 0;
+  scores.forEach(sc => {
+    if (sc.p1 > sc.p2) w1++;
+    else if (sc.p2 > sc.p1) w2++;
+  });
+  const banner = document.getElementById('winnerBanner');
+  if (w1 !== w2 && (w1 + w2 > 0)) {
+    banner.style.display = 'block';
+    banner.textContent   = '🏆 ' + (w1 > w2 ? pName(1) : pName(2)) + ' wins!';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+function deriveWinner() {
+  const scores = getScores();
+  let w1 = 0, w2 = 0;
+  scores.forEach(sc => {
+    if (sc.p1 > sc.p2) w1++;
+    else if (sc.p2 > sc.p1) w2++;
+  });
+  if (w1 > w2) return pName(1);
+  if (w2 > w1) return pName(2);
+  return 'Draw';
+}
+
+// ============================================================
+// FEELING
+// ============================================================
+function pickFeel(num, val, btn) {
+  document.querySelectorAll('#feelRow' + num + ' .feel-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S['feel' + num] = val;
+}
+
+// ============================================================
+// RACKET SELECTS
+// ============================================================
+function populateRackSelects() {
+  [1, 2].forEach(n => {
+    const sel   = document.getElementById('rack' + n + 'Sel');
+    const pn    = pName(n);
+    const mine  = S.rackets.filter(r => r.Player && r.Player.toLowerCase() === pn.toLowerCase());
+    const pool  = mine.length > 0 ? mine : S.rackets;
+    sel.innerHTML = '<option value="">Select…</option>' +
+      pool.map(r => `<option value="${r.ID}">${mine.length === 0 ? r.Player + ' · ' : ''}${r.Name}</option>`).join('');
+  });
+}
+
+// ============================================================
+// SUBMIT SESSION
+// ============================================================
+async function submitSession() {
+  if (!S.scriptUrl) { toast('Go to Settings and connect Google Sheets first', 'err'); return; }
+  const date = document.getElementById('sessDate').value;
+  if (!date) { toast('Pick a date', 'err'); return; }
+  const n1 = pName(1), n2 = pName(2);
+  if (!n1 || !n2) { toast('Enter player names', 'err'); return; }
+  if (n1.toLowerCase() === n2.toLowerCase()) { toast('Players must be different', 'err'); return; }
+
+  const scores  = getScores();
+  const winner  = deriveWinner();
+  const rack1   = document.getElementById('rack1Sel').value;
+  const rack2   = document.getElementById('rack2Sel').value;
+
+  const session = {
+    date, player1: n1, player2: n2,
+    sets: S.sets, scores, winner,
+    racket1: rack1, racket2: rack2,
+    feeling1: S.feel1, feeling2: S.feel2,
+    duration: 2
+  };
+
+  toast('Saving…', '');
+  try {
+    const res = await api('addSession', { data: session });
+    if (!res.success) throw new Error(res.error || 'Failed');
+
+    // Update string counters for rackets used
+    if (rack1) await api('incrementRacketSessions', { id: rack1 }).catch(() => {});
+    if (rack2 && rack2 !== rack1) await api('incrementRacketSessions', { id: rack2 }).catch(() => {});
+
+    // Refresh racket cache
+    const rr = await api('getRackets').catch(() => null);
+    if (rr && rr.rackets) { S.rackets = rr.rackets; populateRackSelects(); }
+
+    toast('Session saved 🎾', 'ok');
+    resetLogForm();
+  } catch (e) {
+    toast('Error: ' + e.message, 'err');
+  }
+}
+
+function resetLogForm() {
+  document.getElementById('sessDate').value = new Date().toISOString().split('T')[0];
+  S.feel1 = ''; S.feel2 = '';
+  document.querySelectorAll('.feel-btn').forEach(b => b.classList.remove('on'));
+  for (let i = 1; i <= S.sets; i++) {
+    const a = document.getElementById('s' + i + 'p1');
+    const b = document.getElementById('s' + i + 'p2');
+    if (a) a.value = ''; if (b) b.value = '';
+  }
+  document.getElementById('winnerBanner').style.display = 'none';
+  document.getElementById('rack1Sel').value = '';
+  document.getElementById('rack2Sel').value = '';
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+async function loadHistory() {
+  if (!S.scriptUrl) {
+    document.getElementById('historyList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
+    document.getElementById('statsRow').innerHTML = '';
+    return;
+  }
+  document.getElementById('historyList').innerHTML = '<div class="loading">Loading…</div>';
+  try {
+    const res = await api('getSessions');
+    S.sessions = res.sessions || [];
+    renderHistory();
+  } catch {
+    document.getElementById('historyList').innerHTML = empty('⚠️', 'Failed to load sessions');
+  }
+}
+
+function renderHistory() {
+  const all = [...S.sessions].reverse();
+
+  // Stats
+  const h2h     = all.filter(s =>
+    (s.Player1 === 'Chew' || s.Player2 === 'Chew') &&
+    (s.Player1 === 'Tan'  || s.Player2 === 'Tan')
+  );
+  const chewW   = h2h.filter(s => s.Winner === 'Chew').length;
+  const tanW    = h2h.filter(s => s.Winner === 'Tan').length;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${all.length}</div><div class="stat-lbl">Sessions</div></div>
+    <div class="stat-card"><div class="stat-val">${chewW}</div><div class="stat-lbl">Chew Wins</div></div>
+    <div class="stat-card"><div class="stat-val">${tanW}</div><div class="stat-lbl">Tan Wins</div></div>
+  `;
+
+  if (all.length === 0) {
+    document.getElementById('historyList').innerHTML = empty('🎾', 'No sessions logged yet');
+    return;
+  }
+
+  document.getElementById('historyList').innerHTML = all.map(s => {
+    const chips = [
+      s.Set1_P1 !== '' && s.Set1_P2 !== '' ? `<span class="chip">${s.Set1_P1}–${s.Set1_P2}</span>` : '',
+      s.Set2_P1 !== '' && s.Set2_P2 !== '' ? `<span class="chip">${s.Set2_P1}–${s.Set2_P2}</span>` : '',
+      s.Set3_P1 !== '' && s.Set3_P2 !== '' ? `<span class="chip">${s.Set3_P1}–${s.Set3_P2}</span>` : ''
+    ].join('');
+    const winChip = s.Winner && s.Winner !== 'Draw'
+      ? `<span class="chip-win">🏆 ${s.Winner}</span>` : '';
+    const feels = [
+      s.Feeling1 ? s.Player1 + ': ' + s.Feeling1 : '',
+      s.Feeling2 ? s.Player2 + ': ' + s.Feeling2 : ''
+    ].filter(Boolean).join(' · ');
+    return `
+      <div class="session-card">
+        <div class="session-top">
+          <div class="session-players">${s.Player1} vs ${s.Player2}</div>
+          <div class="session-date">${fmtDate(s.Date)}</div>
+        </div>
+        <div class="chips">${chips}${winChip}</div>
+        ${feels ? '<div class="session-feels">' + feels + '</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return dt.toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ============================================================
+// STRINGS PAGE
+// ============================================================
+async function loadStrings() {
+  if (!S.scriptUrl) {
+    document.getElementById('stringsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
+    return;
+  }
+  document.getElementById('stringsList').innerHTML = '<div class="loading">Loading…</div>';
+  try {
+    const res = await api('getRackets');
+    S.rackets = res.rackets || [];
+    renderStrings();
+  } catch {
+    document.getElementById('stringsList').innerHTML = empty('⚠️', 'Failed to load');
+  }
+}
+
+function renderStrings() {
+  if (S.rackets.length === 0) {
+    document.getElementById('stringsList').innerHTML = empty('🎾', 'No rackets configured yet. Add them in the Rackets tab.');
+    return;
+  }
+  document.getElementById('stringsList').innerHTML = S.rackets.map(r => {
+    const sess  = parseInt(r.SessionsSinceRestring) || 0;
+    const hrs   = sess * 2;
+    const thr   = parseInt(r.HoursThreshold) || 20;
+    const pct   = Math.min(Math.round((hrs / thr) * 100), 100);
+    const cls   = pct >= 100 ? 'p-red' : pct >= 75 ? 'p-yellow' : 'p-green';
+    const badge = pct >= 100 ? '🔴 Replace now' : pct >= 75 ? '🟡 Getting worn' : '🟢 Good';
+    const rd    = r.RestringDate ? fmtDate(r.RestringDate) : 'Not set';
+    return `
+      <div class="rack-card">
+        <div class="rack-top">
+          <div>
+            <div class="rack-name">${r.Name}</div>
+            <div class="rack-player">${r.Player}</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);">${badge}</div>
+        </div>
+        <div class="rack-string">${r.String || 'String not specified'} &nbsp;·&nbsp; Restrung: ${rd}</div>
+        <div class="progress-wrap">
+          <div class="progress-fill ${cls}" style="width:${pct}%"></div>
+        </div>
+        <div class="rack-footer">
+          <div class="rack-hrs"><b>${hrs}h</b> / ${thr}h &nbsp;(${sess} sessions)</div>
+          <div class="rack-actions">
+            <button class="btn btn-secondary btn-sm" onclick="restringRacket('${r.ID}')">Restring</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function restringRacket(id) {
+  if (!confirm('Mark as restrung? This resets the string timer to 0.')) return;
+  const r = S.rackets.find(x => String(x.ID) === String(id));
+  if (!r) return;
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    const res = await api('updateRacket', { data: {
+      id: r.ID, player: r.Player, name: r.Name, string: r.String,
+      restringDate: today, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold
+    }});
+    if (res.success) { toast('Restrung! Timer reset 🎾', 'ok'); loadStrings(); }
+    else toast('Error: ' + (res.error || 'Unknown'), 'err');
+  } catch { toast('Connection error', 'err'); }
+}
+
+// ============================================================
+// RACKETS PAGE
+// ============================================================
+function pickRackPlayer(val, btn) {
+  document.querySelectorAll('#seg-rack-player .seg-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S.rackPlayer = val;
+  document.getElementById('rackPlayerOther').style.display = val === 'Other' ? 'block' : 'none';
+}
+
+async function loadRackets() {
+  if (!S.scriptUrl) {
+    document.getElementById('racketsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
+    return;
+  }
+  try {
+    const res = await api('getRackets');
+    S.rackets = res.rackets || [];
+    renderRacketsList();
+    populateRackSelects();
+  } catch {
+    document.getElementById('racketsList').innerHTML = empty('⚠️', 'Failed to load');
+  }
+}
+
+function renderRacketsList() {
+  if (S.rackets.length === 0) {
+    document.getElementById('racketsList').innerHTML = empty('🎾', 'No rackets yet — add one above');
+    return;
+  }
+  document.getElementById('racketsList').innerHTML = S.rackets.map(r => {
+    const hrs = (parseInt(r.SessionsSinceRestring) || 0) * 2;
+    return `
+      <div class="rack-card">
+        <div class="rack-top">
+          <div>
+            <div class="rack-name">${r.Name}</div>
+            <div class="rack-player">${r.Player} &nbsp;·&nbsp; ${hrs}h on current strings &nbsp;·&nbsp; Alert at ${r.HoursThreshold}h</div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="deleteRacket('${r.ID}')">Delete</button>
+        </div>
+        ${r.String ? '<div class="rack-string">' + r.String + '</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+async function doAddRacket() {
+  if (!S.scriptUrl) { toast('Connect Google Sheets first', 'err'); return; }
+  let player = S.rackPlayer;
+  if (player === 'Other') {
+    player = document.getElementById('rackPlayerOther').value.trim();
+    if (!player) { toast('Enter the player name', 'err'); return; }
+  }
+  const name = document.getElementById('rackName').value.trim();
+  if (!name) { toast('Enter a racket name / model', 'err'); return; }
+
+  try {
+    const res = await api('addRacket', { data: {
+      id: genId(),
+      player,
+      name,
+      string             : document.getElementById('rackString').value.trim(),
+      restringDate       : document.getElementById('rackDate').value,
+      sessionsSinceRestring: 0,
+      hoursThreshold     : parseInt(document.getElementById('rackThreshold').value) || 20
+    }});
+    if (res.success) {
+      toast('Racket added!', 'ok');
+      document.getElementById('rackName').value   = '';
+      document.getElementById('rackString').value = '';
+      loadRackets();
+    } else toast('Error: ' + (res.error || 'Failed'), 'err');
+  } catch { toast('Connection error', 'err'); }
+}
+
+async function deleteRacket(id) {
+  if (!confirm('Delete this racket? Cannot be undone.')) return;
+  try {
+    const res = await api('deleteRacket', { id });
+    if (res.success) { toast('Deleted', 'ok'); loadRackets(); }
+    else toast('Error: ' + res.error, 'err');
+  } catch { toast('Connection error', 'err'); }
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+async function saveSettings() {
+  const url = document.getElementById('scriptUrlInput').value.trim();
+  if (!url) { toast('Paste your Apps Script URL', 'err'); return; }
+  S.scriptUrl = url;
+  localStorage.setItem('tennisScriptUrl', url);
+  setConn('checking');
+  const ok = await testConn();
+  if (ok) toast('Connected! 🎾', 'ok');
+  else     toast('Could not connect — check the URL', 'err');
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function empty(icon, msg) {
+  return `<div class="empty"><div class="empty-icon">${icon}</div>${msg}</div>`;
+}
+
+let _toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+init();
+</script>
+</body>
+</html>
