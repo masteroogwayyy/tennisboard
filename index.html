@@ -445,6 +445,7 @@
     /* ---- Spacer ---- */
     .spacer { height: 16px; }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -566,6 +567,7 @@
 <!-- ===================== HISTORY ===================== -->
 <div id="page-history" class="page">
   <div class="stats-row" id="statsRow"></div>
+  <button class="btn btn-secondary" onclick="exportToExcel()" style="margin-bottom:12px;">⬇️ Export to Excel</button>
   <div id="historyList"><div class="loading">Loading…</div></div>
 </div>
 
@@ -1176,6 +1178,73 @@ function toast(msg, type) {
   el.className   = 'toast show' + (type ? ' ' + type : '');
   clearTimeout(_toastTimer);
   _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// EXPORT TO EXCEL
+// ============================================================
+async function exportToExcel() {
+  if (!S.scriptUrl) { toast('Connect Google Sheets first', 'err'); return; }
+
+  toast('Fetching data…', '');
+
+  try {
+    // Fetch fresh sessions and rackets
+    const [sessRes, rackRes] = await Promise.all([
+      api('getSessions'),
+      api('getRackets')
+    ]);
+
+    const sessions = sessRes.sessions || [];
+    const rackets  = rackRes.rackets  || [];
+
+    // Build a racket ID → name lookup
+    const rackMap = {};
+    rackets.forEach(r => { rackMap[r.ID] = r.Name; });
+
+    // ---- Sessions sheet ----
+    const sessRows = sessions.map(s => ({
+      'Date'      : s.Date,
+      'Player 1'  : s.Player1,
+      'Player 2'  : s.Player2,
+      'Sets'      : s.Sets,
+      'Set 1'     : s.Set1_P1 !== '' ? `${s.Set1_P1} – ${s.Set1_P2}` : '',
+      'Set 2'     : s.Set2_P1 !== '' ? `${s.Set2_P1} – ${s.Set2_P2}` : '',
+      'Set 3'     : s.Set3_P1 !== '' ? `${s.Set3_P1} – ${s.Set3_P2}` : '',
+      'Winner'    : s.Winner,
+      'P1 Racket' : rackMap[s.Racket1] || s.Racket1 || '',
+      'P2 Racket' : rackMap[s.Racket2] || s.Racket2 || '',
+      'P1 Feel'   : s.Feeling1,
+      'P2 Feel'   : s.Feeling2,
+      'Duration (hrs)': s.Duration
+    }));
+
+    // ---- Rackets sheet ----
+    const rackRows = rackets.map(r => ({
+      'Player'              : r.Player,
+      'Racket'              : r.Name,
+      'String'              : r.String,
+      'Last Restring'       : r.RestringDate,
+      'Sessions Since Restring': r.SessionsSinceRestring,
+      'Hours on Strings'    : (parseInt(r.SessionsSinceRestring) || 0) * 2,
+      'Alert Threshold (hrs)': r.HoursThreshold
+    }));
+
+    const wb = XLSX.utils.book_new();
+
+    const wsSess = XLSX.utils.json_to_sheet(sessRows.length > 0 ? sessRows : [{}]);
+    XLSX.utils.book_append_sheet(wb, wsSess, 'Sessions');
+
+    const wsRack = XLSX.utils.json_to_sheet(rackRows.length > 0 ? rackRows : [{}]);
+    XLSX.utils.book_append_sheet(wb, wsRack, 'Rackets');
+
+    const date = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(wb, `tennis-board-${date}.xlsx`);
+
+    toast('Downloaded! 🎾', 'ok');
+  } catch (e) {
+    toast('Export failed: ' + e.message, 'err');
+  }
 }
 
 // ============================================================
