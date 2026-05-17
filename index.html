@@ -844,15 +844,14 @@ function populateRackSelects() {
     const sel  = document.getElementById('rack' + n + 'Sel');
     const pn   = pName(n);
     const mine = S.rackets.filter(r => r.Player && r.Player.toLowerCase() === pn.toLowerCase());
-    const pool = mine.length > 0 ? mine : S.rackets;
 
-    if (pool.length > 0) {
+    if (mine.length > 0) {
       sel.innerHTML = '<option value="">Select…</option>' +
-        pool.map(r => `<option value="${r.ID}">${mine.length === 0 ? r.Player + ' · ' : ''}${r.Name}</option>`).join('');
+        mine.map(r => `<option value="${r.ID}">${r.Name}</option>`).join('');
     } else {
-      // No rackets configured yet — show simple defaults
+      // No rackets for this player yet
       sel.innerHTML = `
-        <option value="">Select…</option>
+        <option value="">No rackets — add in Rackets tab</option>
         <option value="default-a">Racket A</option>
         <option value="default-b">Racket B</option>
       `;
