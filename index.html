@@ -107,7 +107,7 @@
       margin-bottom: 12px;
     }
     .card-title {
-      font-size: 0.68rem;
+      font-size: 0.88rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -511,7 +511,7 @@
     </div>
 
     <div class="form-group">
-      <span class="label" id="scoresLabel">Scores &nbsp;<span style="font-weight:400;color:var(--muted);">Chew vs Tan</span></span>
+      <span class="label" id="scoresLabel" style="font-size:1rem;font-weight:700;color:var(--text);">Score: &nbsp;<span style="font-weight:500;color:var(--muted);font-size:0.9rem;">Chew vs Tan</span></span>
       <div id="setRows"></div>
       <div class="winner-banner" id="winnerBanner"></div>
     </div>
@@ -756,7 +756,7 @@ function updateLabels() {
   document.getElementById('feel1Lbl').textContent  = n1;
   document.getElementById('feel2Lbl').textContent  = n2;
   document.getElementById('scoresLabel').innerHTML =
-    'Scores &nbsp;<span style="font-weight:400;color:var(--muted);">' + n1 + ' vs ' + n2 + '</span>';
+    'Score: &nbsp;<span style="font-weight:500;color:var(--muted);font-size:0.9rem;">' + n1 + ' vs ' + n2 + '</span>';
 }
 
 // ============================================================
