@@ -21,6 +21,7 @@
       --red:       #f87171;
       --yellow:    #fbbf24;
       --gold:      #f59e0b;
+      --blue:      #60a5fa;
       --radius:    14px;
       --font:      -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     }
@@ -36,12 +37,7 @@
     }
 
     /* ---- Header ---- */
-    .header {
-      padding: 18px 16px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .header { padding: 18px 16px 0; display: flex; align-items: center; justify-content: space-between; }
     .header-title { font-size: 1.25rem; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
     .conn-badge   { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--muted); }
     .dot          { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
@@ -54,24 +50,17 @@
       display: flex;
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       margin-top: 12px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      overflow-x: auto; scrollbar-width: none;
     }
     .nav::-webkit-scrollbar { display: none; }
     .nav-btn {
       flex: none;
       padding: 12px 15px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
+      border: none; background: transparent;
+      color: var(--muted); font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; white-space: nowrap;
       border-bottom: 2px solid transparent;
       transition: color 0.2s, border-color 0.2s;
       font-family: var(--font);
@@ -87,35 +76,21 @@
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px;
-      margin-bottom: 12px;
+      padding: 14px; margin-bottom: 12px;
     }
     .card-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      margin-bottom: 12px;
+      font-size: 0.88rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--muted); margin-bottom: 12px;
     }
 
     /* ---- Calendar ---- */
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .cal-nav {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 5px 12px;
-      font-family: var(--font);
-      transition: background 0.15s;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-size: 1rem; cursor: pointer; padding: 5px 12px;
+      font-family: var(--font); transition: background 0.15s;
     }
     .cal-nav:hover { background: var(--border); }
     .cal-month-label { font-weight: 700; font-size: 0.92rem; }
@@ -125,35 +100,15 @@
       grid-auto-rows: 36px;
       gap: 3px;
     }
-    .cal-dow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .cal-day {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.82rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.12s;
-    }
+    .cal-dow { display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+    .cal-day { display: flex; align-items: center; justify-content: center; font-size: 0.82rem; border-radius: 8px; cursor: pointer; transition: background 0.12s; }
     .cal-day:hover   { background: var(--bg3); }
     .cal-day.today   { border: 1px solid var(--green-mid); color: var(--green); font-weight: 600; }
     .cal-day.sel     { background: var(--green-mid); color: #000; font-weight: 700; border: none; }
     .cal-day.sel.today { background: var(--green-mid); color: #000; }
     .cal-day.empty   { cursor: default; }
     .cal-day.empty:hover { background: transparent; }
-    .cal-selected-label {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
+    .cal-selected-label { text-align: center; margin-top: 10px; font-size: 0.82rem; color: var(--muted); }
     .cal-selected-label span { color: var(--green); font-weight: 600; }
 
     /* ---- Forms ---- */
@@ -161,16 +116,11 @@
     .form-group:last-child { margin-bottom: 0; }
     .label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
     .input {
-      width: 100%;
-      padding: 10px 12px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      font-size: 0.88rem;
-      font-family: var(--font);
-      transition: border-color 0.15s;
-      appearance: none;
+      width: 100%; padding: 10px 12px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--text);
+      font-size: 0.88rem; font-family: var(--font);
+      transition: border-color 0.15s; appearance: none;
     }
     .input:focus { outline: none; border-color: var(--green-mid); }
     .input::placeholder { color: var(--muted); }
@@ -178,94 +128,62 @@
     /* ---- Segment buttons ---- */
     .seg { display: flex; gap: 6px; }
     .seg-btn {
-      flex: 1;
-      padding: 9px 6px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-      font-family: var(--font);
+      flex: 1; padding: 9px 6px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--muted);
+      font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; text-align: center;
+      transition: all 0.15s; font-family: var(--font);
     }
     .seg-btn.on { background: var(--green-dim); border-color: var(--green-mid); color: #fff; }
+    .seg-btn.rain-on { background: rgba(96,165,250,0.15); border-color: var(--blue); color: var(--blue); }
 
     /* ---- Set scores ---- */
     .set-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .set-row:last-child { margin-bottom: 0; }
     .set-lbl  { font-size: 0.75rem; color: var(--muted); width: 38px; flex-shrink: 0; }
     .score-inp {
-      flex: 1;
-      padding: 9px 4px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-align: center;
-      font-family: var(--font);
-      transition: border-color 0.15s;
+      flex: 1; padding: 9px 4px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--text);
+      font-size: 1.1rem; font-weight: 700; text-align: center;
+      font-family: var(--font); transition: border-color 0.15s;
     }
     .score-inp:focus { outline: none; border-color: var(--green-mid); }
     .score-sep { color: var(--muted); font-size: 0.75rem; }
 
-    /* ---- Winner + money banners ---- */
+    /* ---- Banners ---- */
     .winner-banner {
-      display: none;
-      padding: 10px 12px;
-      background: rgba(34,197,94,0.1);
-      border: 1px solid var(--green-dim);
-      border-radius: 9px;
-      color: var(--green);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 10px;
+      display: none; padding: 10px 12px;
+      background: rgba(34,197,94,0.1); border: 1px solid var(--green-dim);
+      border-radius: 9px; color: var(--green);
+      font-size: 0.85rem; font-weight: 600; margin-top: 10px;
     }
     .money-banner {
-      display: none;
-      padding: 10px 12px;
-      background: rgba(245,158,11,0.1);
-      border: 1px solid rgba(245,158,11,0.35);
-      border-radius: 9px;
-      color: var(--gold);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 8px;
+      display: none; padding: 10px 12px;
+      background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.35);
+      border-radius: 9px; color: var(--gold);
+      font-size: 0.85rem; font-weight: 600; margin-top: 8px;
     }
 
     /* ---- Feeling buttons ---- */
     .feeling-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .feel-btn {
       padding: 7px 11px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      font-family: var(--font);
-      white-space: nowrap;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 20px; color: var(--muted);
+      font-size: 0.78rem; cursor: pointer;
+      transition: all 0.15s; font-family: var(--font); white-space: nowrap;
     }
     .feel-btn.on { border-color: var(--green-mid); color: var(--green); background: rgba(34,197,94,0.08); }
 
     /* ---- Buttons ---- */
     .btn {
-      display: block;
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: opacity 0.15s, transform 0.1s;
-      text-align: center;
+      display: block; width: 100%; padding: 13px;
+      border: none; border-radius: 10px;
+      font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; font-family: var(--font);
+      transition: opacity 0.15s, transform 0.1s; text-align: center;
     }
     .btn:active { transform: scale(0.98); }
     .btn-primary   { background: var(--green); color: #000; }
@@ -273,80 +191,60 @@
     .btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
     .btn-sm        { display: inline-block; width: auto; padding: 7px 13px; font-size: 0.78rem; border-radius: 8px; }
     .btn-danger    { background: transparent; color: var(--red); border: 1px solid rgba(248,113,113,0.4); }
+    .btn-gold      { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.4); }
 
     /* ---- Two-col ---- */
     .two-col { display: flex; gap: 8px; }
     .two-col > * { flex: 1; min-width: 0; }
 
     /* ---- Section header ---- */
-    .sec-head {
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      margin: 14px 0 8px;
-    }
+    .sec-head { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin: 14px 0 8px; }
 
     /* ---- Stats row ---- */
     .stats-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .stat-card {
-      flex: 1;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 10px;
-      text-align: center;
-    }
+    .stat-card { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 10px; text-align: center; }
     .stat-val  { font-size: 1.9rem; font-weight: 800; color: var(--green); line-height: 1; }
     .stat-lbl  { font-size: 0.68rem; color: var(--muted); margin-top: 4px; }
 
+    /* ---- Balance card ---- */
+    .balance-card {
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.3);
+      border-radius: var(--radius);
+      padding: 14px; margin-bottom: 12px;
+    }
+    .balance-amount { font-size: 1.5rem; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .balance-amount.settled { color: var(--green); font-size: 1.1rem; }
+    .balance-since  { font-size: 0.72rem; color: var(--muted); margin-bottom: 10px; }
+
     /* ---- Session history card ---- */
     .session-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 13px 14px;
-      margin-bottom: 10px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 13px 14px; margin-bottom: 10px;
     }
     .session-top    { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .session-meta   { flex: 1; }
     .session-players{ font-weight: 600; font-size: 0.9rem; }
+    .session-sub    { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
     .session-date   { font-size: 0.75rem; color: var(--muted); }
     .chips          { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .chip {
-      background: var(--bg3);
-      border-radius: 6px;
-      padding: 3px 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
+    .chip           { background: var(--bg3); border-radius: 6px; padding: 3px 10px; font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .chip-win       { background: var(--green-dim); color: #a7f3c0; border-radius: 6px; padding: 3px 9px; font-size: 0.72rem; font-weight: 700; }
+    .chip-money     { background: rgba(245,158,11,0.15); color: var(--gold); border-radius: 6px; padding: 3px 9px; font-size: 0.72rem; font-weight: 700; }
+    .chip-rain      { background: rgba(96,165,250,0.12); color: var(--blue); border-radius: 6px; padding: 3px 9px; font-size: 0.72rem; }
+    .session-feels  { margin-top: 7px; font-size: 0.72rem; color: var(--muted); }
+    .session-actions{ display: flex; align-items: center; gap: 6px; margin-left: 8px; }
+    .del-btn {
+      background: transparent; border: none;
+      color: var(--muted); font-size: 1rem;
+      cursor: pointer; padding: 2px 4px;
+      border-radius: 6px; transition: color 0.15s;
+      line-height: 1;
     }
-    .chip-win {
-      background: var(--green-dim);
-      color: #a7f3c0;
-      border-radius: 6px;
-      padding: 3px 9px;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-    .chip-money {
-      background: rgba(245,158,11,0.15);
-      color: var(--gold);
-      border-radius: 6px;
-      padding: 3px 9px;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-    .session-feels { margin-top: 7px; font-size: 0.72rem; color: var(--muted); }
+    .del-btn:hover { color: var(--red); }
 
     /* ---- Racket / String cards ---- */
-    .rack-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 13px 14px;
-      margin-bottom: 10px;
-    }
+    .rack-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 14px; margin-bottom: 10px; }
     .rack-top    { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
     .rack-name   { font-weight: 600; font-size: 0.92rem; }
     .rack-player { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
@@ -368,44 +266,35 @@
 
     /* ---- Toast ---- */
     .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
+      position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      padding: 11px 20px;
-      border-radius: 20px;
-      font-size: 0.83rem;
-      font-weight: 600;
-      z-index: 999;
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 11px 20px; border-radius: 20px;
+      font-size: 0.83rem; font-weight: 600; z-index: 999;
       transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-      white-space: nowrap;
-      pointer-events: none;
+      white-space: nowrap; pointer-events: none;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .toast.ok   { border-color: var(--green-mid); color: var(--green); }
     .toast.err  { border-color: var(--red); color: var(--red); }
 
     /* ---- Empty / loading ---- */
-    .empty   { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 0.85rem; }
+    .empty      { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 0.85rem; }
     .empty-icon { font-size: 2.2rem; margin-bottom: 10px; }
-    .loading { text-align: center; padding: 36px; color: var(--muted); font-size: 0.82rem; }
-    .spacer  { height: 16px; }
+    .loading    { text-align: center; padding: 36px; color: var(--muted); font-size: 0.82rem; }
+    .spacer     { height: 16px; }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <div class="header">
   <div class="header-title">🎾 Tennis Board</div>
-  <div class="conn-badge" id="connBadge">
+  <div class="conn-badge">
     <span class="dot dot-yellow" id="connDot"></span>
     <span id="connText">Not connected</span>
   </div>
 </div>
 
-<!-- Nav -->
 <nav class="nav">
   <button class="nav-btn active" data-page="log">Log Session</button>
   <button class="nav-btn" data-page="history">History</button>
@@ -417,7 +306,7 @@
 <!-- ===================== LOG SESSION ===================== -->
 <div id="page-log" class="page active">
 
-  <!-- Calendar date picker -->
+  <!-- Calendar -->
   <div class="card">
     <div class="card-title">Date</div>
     <div class="cal-header">
@@ -426,15 +315,42 @@
       <button class="cal-nav" onclick="calNext()">›</button>
     </div>
     <div class="cal-grid" id="calGrid">
-      <div class="cal-dow">Su</div>
-      <div class="cal-dow">Mo</div>
-      <div class="cal-dow">Tu</div>
-      <div class="cal-dow">We</div>
-      <div class="cal-dow">Th</div>
-      <div class="cal-dow">Fr</div>
-      <div class="cal-dow">Sa</div>
+      <div class="cal-dow">Su</div><div class="cal-dow">Mo</div><div class="cal-dow">Tu</div>
+      <div class="cal-dow">We</div><div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div>
     </div>
     <div class="cal-selected-label">Selected: <span id="calSelLabel"></span></div>
+  </div>
+
+  <!-- Location + Conditions -->
+  <div class="card">
+    <div class="card-title">Session Info</div>
+
+    <div class="form-group">
+      <span class="label">Location</span>
+      <div class="seg" id="seg-loc">
+        <button class="seg-btn on" onclick="pickLoc('Foresque Residences',this)">FR</button>
+        <button class="seg-btn"    onclick="pickLoc('Blossom Residences',this)">BR</button>
+        <button class="seg-btn"    onclick="pickLoc('Other',this)">Others</button>
+      </div>
+      <input type="text" id="locOther" class="input" placeholder="Venue name…" style="display:none;margin-top:7px;">
+    </div>
+
+    <div class="two-col">
+      <div class="form-group">
+        <span class="label">Rained?</span>
+        <div class="seg" id="seg-rain">
+          <button class="seg-btn on" onclick="pickRain(false,this)">☀️ No</button>
+          <button class="seg-btn"    onclick="pickRain(true,this)">🌧️ Yes</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <span class="label">Duration</span>
+        <div class="seg" id="seg-dur">
+          <button class="seg-btn on" onclick="pickDur(2,this)">2 hrs</button>
+          <button class="seg-btn"    onclick="pickDur(1,this)">1 hr</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Players -->
@@ -460,11 +376,11 @@
     </div>
   </div>
 
-  <!-- Match — always 3 sets, no format picker -->
+  <!-- Match -->
   <div class="card">
     <div class="card-title">Match</div>
     <div class="form-group">
-      <span class="label" id="scoresLabel" style="font-size:1rem;font-weight:700;color:var(--text);">
+      <span class="label" style="font-size:1rem;font-weight:700;color:var(--text);">
         Score: <span style="font-weight:500;color:var(--muted);font-size:0.9rem;" id="scoresSubLabel">Chew vs Tan</span>
       </span>
       <div style="margin-top:10px;">
@@ -492,7 +408,7 @@
     </div>
   </div>
 
-  <!-- Rackets Used -->
+  <!-- Rackets -->
   <div class="card">
     <div class="card-title">Rackets Used</div>
     <div class="two-col">
@@ -539,6 +455,12 @@
 <!-- ===================== HISTORY ===================== -->
 <div id="page-history" class="page">
   <div class="stats-row" id="statsRow"></div>
+  <div id="balanceCard" style="display:none;" class="balance-card">
+    <div class="card-title" style="margin-bottom:8px;">💰 Running Balance</div>
+    <div class="balance-amount" id="balanceAmount"></div>
+    <div class="balance-since"  id="balanceSince"></div>
+    <button class="btn btn-gold btn-sm" onclick="settleUp()">✓ Settle Up</button>
+  </div>
   <button class="btn btn-secondary" onclick="exportToExcel()" style="margin-bottom:12px;">⬇️ Export to Excel</button>
   <div id="historyList"><div class="loading">Loading…</div></div>
 </div>
@@ -600,8 +522,8 @@
     <div class="card-title">About</div>
     <div style="font-size:0.82rem;color:var(--muted);line-height:1.7;">
       Built for Chew &amp; Tan.<br>
-      Track scores, string hours, and session vibes.<br>
-      1 session = 2 hrs of play time.
+      FR = Foresque Residences · BR = Blossom Residences<br>
+      Money only calculated for Chew vs Tan matches on completed sets (≥6 games).
     </div>
   </div>
 </div>
@@ -620,9 +542,13 @@ const S = {
   p2        : 'Tan',
   feel1     : '',
   feel2     : '',
+  location  : 'Foresque Residences',
+  rained    : false,
+  duration  : 2,
   rackPlayer: 'Chew',
   rackets   : [],
-  sessions  : []
+  sessions  : [],
+  lastReset : null
 };
 
 // ============================================================
@@ -641,7 +567,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 });
 
 // ============================================================
-// SHEETS API
+// API
 // ============================================================
 async function api(action, params = {}) {
   if (!S.scriptUrl) throw new Error('No script URL');
@@ -657,101 +583,95 @@ async function api(action, params = {}) {
 // ============================================================
 // CALENDAR
 // ============================================================
-const CAL = {
-  selected: new Date(),
-  viewing : new Date()
-};
-
-const DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+const CAL = { selected: new Date(), viewing: new Date() };
 
 function renderCalendar() {
-  const v     = CAL.viewing;
-  const sel   = CAL.selected;
-  const today = new Date();
-
+  const v = CAL.viewing, sel = CAL.selected, today = new Date();
   document.getElementById('calMonthYear').textContent =
     v.toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
-
-  // Update selected label
   document.getElementById('calSelLabel').textContent =
     sel.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
   const grid = document.getElementById('calGrid');
-  // Remove existing day cells (keep dow headers = first 7 children)
   while (grid.children.length > 7) grid.removeChild(grid.lastChild);
 
-  const firstDow = new Date(v.getFullYear(), v.getMonth(), 1).getDay();
+  const firstDow    = new Date(v.getFullYear(), v.getMonth(), 1).getDay();
   const daysInMonth = new Date(v.getFullYear(), v.getMonth() + 1, 0).getDate();
 
-  // Empty cells
   for (let i = 0; i < firstDow; i++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day empty';
-    grid.appendChild(el);
+    const el = document.createElement('div'); el.className = 'cal-day empty'; grid.appendChild(el);
   }
-
-  // Day cells
   for (let d = 1; d <= daysInMonth; d++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day';
-    el.textContent = d;
-
-    const isToday = d === today.getDate() &&
-      v.getMonth() === today.getMonth() &&
-      v.getFullYear() === today.getFullYear();
-
-    const isSel = d === sel.getDate() &&
-      v.getMonth() === sel.getMonth() &&
-      v.getFullYear() === sel.getFullYear();
-
+    const el = document.createElement('div'); el.className = 'cal-day'; el.textContent = d;
+    const isToday = d === today.getDate() && v.getMonth() === today.getMonth() && v.getFullYear() === today.getFullYear();
+    const isSel   = d === sel.getDate()   && v.getMonth() === sel.getMonth()   && v.getFullYear() === sel.getFullYear();
     if (isToday) el.classList.add('today');
     if (isSel)   el.classList.add('sel');
-
-    el.onclick = () => {
-      CAL.selected = new Date(v.getFullYear(), v.getMonth(), d);
-      renderCalendar();
-    };
+    el.onclick = () => { CAL.selected = new Date(v.getFullYear(), v.getMonth(), d); renderCalendar(); };
     grid.appendChild(el);
   }
 }
 
-function calPrev() {
-  CAL.viewing = new Date(CAL.viewing.getFullYear(), CAL.viewing.getMonth() - 1, 1);
-  renderCalendar();
-}
-function calNext() {
-  CAL.viewing = new Date(CAL.viewing.getFullYear(), CAL.viewing.getMonth() + 1, 1);
-  renderCalendar();
-}
+function calPrev() { CAL.viewing = new Date(CAL.viewing.getFullYear(), CAL.viewing.getMonth() - 1, 1); renderCalendar(); }
+function calNext() { CAL.viewing = new Date(CAL.viewing.getFullYear(), CAL.viewing.getMonth() + 1, 1); renderCalendar(); }
 function getSelectedDate() {
   const d = CAL.selected;
-  return d.getFullYear() + '-' +
-    String(d.getMonth() + 1).padStart(2, '0') + '-' +
-    String(d.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
 // ============================================================
-// MONEY CALCULATION
+// MONEY
 // ============================================================
-function setMoney(winnerScore, loserScore) {
-  if (loserScore === 0) return 6;    // $2 x3
-  if (loserScore === 1) return 4;    // $2 x2
-  if (loserScore === 2) return 3;    // $2 x1.5
-  return 2;                          // $2 flat (3+)
+function isChewVsTan(p1, p2) {
+  const a = p1.toLowerCase(), b = p2.toLowerCase();
+  return (a === 'chew' || b === 'chew') && (a === 'tan' || b === 'tan');
 }
 
-function calcMoney(scores, p1Name, p2Name) {
+function isCompletedSet(p1, p2) {
+  return Math.max(p1, p2) >= 6;
+}
+
+function setMoneyAmt(winner, loser) {
+  if (loser === 0) return 6;
+  if (loser === 1) return 4;
+  if (loser === 2) return 3;
+  return 2;
+}
+
+// Returns money string for display, or null if not applicable
+function calcMoneyDisplay(scores, p1Name, p2Name) {
+  if (!isChewVsTan(p1Name, p2Name)) return null;
   let p1earn = 0, p2earn = 0;
   scores.forEach(sc => {
-    if (sc.p1 === 0 && sc.p2 === 0) return; // unplayed set
-    if (sc.p1 > sc.p2) p1earn += setMoney(sc.p1, sc.p2);
-    else if (sc.p2 > sc.p1) p2earn += setMoney(sc.p2, sc.p1);
+    if (!isCompletedSet(sc.p1, sc.p2)) return;
+    if (sc.p1 > sc.p2) p1earn += setMoneyAmt(sc.p1, sc.p2);
+    else if (sc.p2 > sc.p1) p2earn += setMoneyAmt(sc.p2, sc.p1);
   });
+  if (p1earn === 0 && p2earn === 0) return null;
   const net = p1earn - p2earn;
-  if (net === 0 && p1earn === 0) return null; // no scores entered
   if (net === 0) return 'All square 💚';
   if (net > 0)   return `${p2Name} owes ${p1Name} $${net}`;
   return `${p1Name} owes ${p2Name} $${Math.abs(net)}`;
+}
+
+// Returns net dollars from Chew's perspective (positive = Tan owes Chew)
+function sessionChewBalance(s) {
+  if (!isChewVsTan(String(s.Player1), String(s.Player2))) return 0;
+  const chewIsP1 = String(s.Player1).toLowerCase() === 'chew';
+  const scores = [
+    { p1: Number(s.Set1_P1)||0, p2: Number(s.Set1_P2)||0 },
+    { p1: Number(s.Set2_P1)||0, p2: Number(s.Set2_P2)||0 },
+    { p1: Number(s.Set3_P1)||0, p2: Number(s.Set3_P2)||0 }
+  ];
+  let chewEarn = 0, tanEarn = 0;
+  scores.forEach(sc => {
+    if (!isCompletedSet(sc.p1, sc.p2)) return;
+    const chewSc = chewIsP1 ? sc.p1 : sc.p2;
+    const tanSc  = chewIsP1 ? sc.p2 : sc.p1;
+    if (chewSc > tanSc) chewEarn += setMoneyAmt(chewSc, tanSc);
+    else if (tanSc > chewSc) tanEarn += setMoneyAmt(tanSc, chewSc);
+  });
+  return chewEarn - tanEarn;
 }
 
 // ============================================================
@@ -761,7 +681,6 @@ function init() {
   document.getElementById('rackDate').value = new Date().toISOString().split('T')[0];
   renderCalendar();
   updateLabels();
-
   if (S.scriptUrl) {
     document.getElementById('scriptUrlInput').value = S.scriptUrl;
     setConn('checking');
@@ -783,25 +702,21 @@ async function testConn() {
 }
 
 function setConn(status) {
-  const dot  = document.getElementById('connDot');
-  const txt  = document.getElementById('connText');
+  const dot = document.getElementById('connDot'), txt = document.getElementById('connText');
   const alrt = document.getElementById('connAlert');
   if (status === 'ok') {
-    dot.className = 'dot dot-green';
-    txt.textContent = 'Connected';
+    dot.className = 'dot dot-green'; txt.textContent = 'Connected';
     if (alrt) { alrt.className = 'alert alert-ok'; alrt.textContent = '✓ Connected to Google Sheets'; }
   } else if (status === 'checking') {
-    dot.className = 'dot dot-yellow';
-    txt.textContent = 'Connecting…';
+    dot.className = 'dot dot-yellow'; txt.textContent = 'Connecting…';
   } else {
-    dot.className = 'dot dot-red';
-    txt.textContent = 'Not connected';
+    dot.className = 'dot dot-red'; txt.textContent = 'Not connected';
     if (alrt) { alrt.className = 'alert alert-warn'; alrt.textContent = 'Not connected — paste your Apps Script URL below.'; }
   }
 }
 
 // ============================================================
-// PLAYER SELECTION
+// PLAYER / LOCATION / CONDITIONS
 // ============================================================
 function pickPlayer(num, val, btn) {
   document.querySelectorAll(`#seg-p${num} .seg-btn`).forEach(b => b.classList.remove('on'));
@@ -820,72 +735,69 @@ function pName(num) {
 
 function updateLabels() {
   const n1 = pName(1), n2 = pName(2);
-  document.getElementById('rack1Lbl').textContent    = n1 + "'s Racket";
-  document.getElementById('rack2Lbl').textContent    = n2 + "'s Racket";
-  document.getElementById('feel1Lbl').textContent    = n1;
-  document.getElementById('feel2Lbl').textContent    = n2;
+  document.getElementById('rack1Lbl').textContent  = n1 + "'s Racket";
+  document.getElementById('rack2Lbl').textContent  = n2 + "'s Racket";
+  document.getElementById('feel1Lbl').textContent  = n1;
+  document.getElementById('feel2Lbl').textContent  = n2;
   document.getElementById('scoresSubLabel').textContent = n1 + ' vs ' + n2;
 }
 
-// ============================================================
-// SCORE INPUT — winner + money live update
-// ============================================================
-function getScores() {
-  const scores = [];
-  for (let i = 1; i <= 3; i++) {
-    scores.push({
-      p1: parseInt(document.getElementById('s' + i + 'p1').value) || 0,
-      p2: parseInt(document.getElementById('s' + i + 'p2').value) || 0
-    });
-  }
-  return scores;
+function pickLoc(val, btn) {
+  document.querySelectorAll('#seg-loc .seg-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S.location = val;
+  document.getElementById('locOther').style.display = val === 'Other' ? 'block' : 'none';
 }
 
-function getPlayedScores() {
-  return getScores().filter(sc => !(sc.p1 === 0 && sc.p2 === 0));
+function pickRain(val, btn) {
+  document.querySelectorAll('#seg-rain .seg-btn').forEach(b => { b.classList.remove('on'); b.classList.remove('rain-on'); });
+  S.rained = val;
+  if (val) btn.classList.add('rain-on');
+  else btn.classList.add('on');
+}
+
+function pickDur(val, btn) {
+  document.querySelectorAll('#seg-dur .seg-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  S.duration = val;
+}
+
+// ============================================================
+// SCORES
+// ============================================================
+function getScores() {
+  return [1,2,3].map(i => ({
+    p1: parseInt(document.getElementById('s' + i + 'p1').value) || 0,
+    p2: parseInt(document.getElementById('s' + i + 'p2').value) || 0
+  }));
 }
 
 function onScoreInput() {
   const scores = getScores();
   const n1 = pName(1), n2 = pName(2);
 
-  // Winner
   let w1 = 0, w2 = 0;
   scores.forEach(sc => {
     if (sc.p1 === 0 && sc.p2 === 0) return;
-    if (sc.p1 > sc.p2) w1++;
-    else if (sc.p2 > sc.p1) w2++;
+    if (sc.p1 > sc.p2) w1++; else if (sc.p2 > sc.p1) w2++;
   });
-  const winBanner = document.getElementById('winnerBanner');
-  if ((w1 > 0 || w2 > 0) && w1 !== w2) {
-    winBanner.style.display = 'block';
-    winBanner.textContent   = '🏆 ' + (w1 > w2 ? n1 : n2) + ' wins!';
-  } else {
-    winBanner.style.display = 'none';
-  }
+  const win = document.getElementById('winnerBanner');
+  if ((w1 > 0 || w2 > 0) && w1 !== w2) { win.style.display = 'block'; win.textContent = '🏆 ' + (w1 > w2 ? n1 : n2) + ' wins!'; }
+  else win.style.display = 'none';
 
-  // Money
-  const moneyMsg  = calcMoney(scores, n1, n2);
-  const monBanner = document.getElementById('moneyBanner');
-  if (moneyMsg) {
-    monBanner.style.display = 'block';
-    monBanner.textContent   = '💰 ' + moneyMsg;
-  } else {
-    monBanner.style.display = 'none';
-  }
+  const moneyMsg = calcMoneyDisplay(scores, n1, n2);
+  const mon = document.getElementById('moneyBanner');
+  if (moneyMsg) { mon.style.display = 'block'; mon.textContent = '💰 ' + moneyMsg; }
+  else mon.style.display = 'none';
 }
 
 function deriveWinner() {
-  const scores = getScores();
   let w1 = 0, w2 = 0;
-  scores.forEach(sc => {
+  getScores().forEach(sc => {
     if (sc.p1 === 0 && sc.p2 === 0) return;
-    if (sc.p1 > sc.p2) w1++;
-    else if (sc.p2 > sc.p1) w2++;
+    if (sc.p1 > sc.p2) w1++; else if (sc.p2 > sc.p1) w2++;
   });
-  if (w1 > w2) return pName(1);
-  if (w2 > w1) return pName(2);
-  return 'Draw';
+  if (w1 > w2) return pName(1); if (w2 > w1) return pName(2); return 'Draw';
 }
 
 // ============================================================
@@ -898,25 +810,18 @@ function pickFeel(num, val, btn) {
 }
 
 // ============================================================
-// RACKET SELECTS — auto-select first racket
+// RACKET SELECTS
 // ============================================================
 function populateRackSelects() {
   [1, 2].forEach(n => {
     const sel  = document.getElementById('rack' + n + 'Sel');
     const pn   = pName(n);
     const mine = S.rackets.filter(r => r.Player && r.Player.toLowerCase() === pn.toLowerCase());
-
     if (mine.length > 0) {
-      sel.innerHTML = mine.map(r =>
-        `<option value="${r.ID}">${r.Name}</option>`
-      ).join('');
-      sel.value = mine[0].ID; // auto-select first
+      sel.innerHTML = mine.map(r => `<option value="${r.ID}">${r.Name}</option>`).join('');
+      sel.value = mine[0].ID;
     } else {
-      sel.innerHTML = `
-        <option value="">No rackets — add in Rackets tab</option>
-        <option value="default-a">Racket A</option>
-        <option value="default-b">Racket B</option>
-      `;
+      sel.innerHTML = `<option value="">No rackets — add in Rackets tab</option><option value="default-a">Racket A</option><option value="default-b">Racket B</option>`;
     }
   });
 }
@@ -925,29 +830,25 @@ function populateRackSelects() {
 // SUBMIT SESSION
 // ============================================================
 async function submitSession() {
-  if (!S.scriptUrl) { toast('Go to Settings and connect Google Sheets first', 'err'); return; }
-
-  const date = getSelectedDate();
-  const n1   = pName(1), n2 = pName(2);
+  if (!S.scriptUrl) { toast('Connect Google Sheets in Settings first', 'err'); return; }
+  const n1 = pName(1), n2 = pName(2);
   if (!n1 || !n2) { toast('Enter player names', 'err'); return; }
   if (n1.toLowerCase() === n2.toLowerCase()) { toast('Players must be different', 'err'); return; }
 
   const allScores    = getScores();
   const playedScores = allScores.filter(sc => !(sc.p1 === 0 && sc.p2 === 0));
   const winner       = deriveWinner();
-  const moneyMsg     = calcMoney(allScores, n1, n2);
   const rack1        = document.getElementById('rack1Sel').value;
   const rack2        = document.getElementById('rack2Sel').value;
+  let   location     = S.location;
+  if (location === 'Other') location = document.getElementById('locOther').value.trim() || 'Other';
 
   const session = {
-    date, player1: n1, player2: n2,
-    sets: playedScores.length,
-    scores: playedScores,
-    winner,
+    date: getSelectedDate(), player1: n1, player2: n2,
+    sets: playedScores.length, scores: playedScores, winner,
     racket1: rack1, racket2: rack2,
     feeling1: S.feel1, feeling2: S.feel2,
-    moneyResult: moneyMsg || '',
-    duration: 2
+    location, rained: S.rained, duration: S.duration
   };
 
   toast('Saving…', '');
@@ -955,26 +856,23 @@ async function submitSession() {
     const res = await api('addSession', { data: session });
     if (!res.success) throw new Error(res.error || 'Failed');
 
-    if (rack1 && !rack1.startsWith('default')) await api('incrementRacketSessions', { id: rack1 }).catch(() => {});
-    if (rack2 && rack2 !== rack1 && !rack2.startsWith('default')) await api('incrementRacketSessions', { id: rack2 }).catch(() => {});
+    // String counter: 1hr session = 0.5 increment
+    const inc = S.duration === 1 ? 0.5 : 1;
+    if (rack1 && !rack1.startsWith('default')) await api('incrementRacketSessions', { id: rack1, amount: inc }).catch(() => {});
+    if (rack2 && rack2 !== rack1 && !rack2.startsWith('default')) await api('incrementRacketSessions', { id: rack2, amount: inc }).catch(() => {});
 
     const rr = await api('getRackets').catch(() => null);
     if (rr && rr.rackets) { S.rackets = rr.rackets; populateRackSelects(); }
 
     toast('Session saved 🎾', 'ok');
     resetLogForm();
-  } catch (e) {
-    toast('Error: ' + e.message, 'err');
-  }
+  } catch (e) { toast('Error: ' + e.message, 'err'); }
 }
 
 function resetLogForm() {
   S.feel1 = ''; S.feel2 = '';
   document.querySelectorAll('.feel-btn').forEach(b => b.classList.remove('on'));
-  for (let i = 1; i <= 3; i++) {
-    document.getElementById('s' + i + 'p1').value = '';
-    document.getElementById('s' + i + 'p2').value = '';
-  }
+  [1,2,3].forEach(i => { document.getElementById('s'+i+'p1').value = ''; document.getElementById('s'+i+'p2').value = ''; });
   document.getElementById('winnerBanner').style.display = 'none';
   document.getElementById('moneyBanner').style.display  = 'none';
 }
@@ -986,12 +884,17 @@ async function loadHistory() {
   if (!S.scriptUrl) {
     document.getElementById('historyList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
     document.getElementById('statsRow').innerHTML = '';
+    document.getElementById('balanceCard').style.display = 'none';
     return;
   }
   document.getElementById('historyList').innerHTML = '<div class="loading">Loading…</div>';
   try {
-    const res = await api('getSessions');
-    S.sessions = res.sessions || [];
+    const [sessRes, cfgRes] = await Promise.all([
+      api('getSessions'),
+      api('getConfig', { key: 'lastReset' })
+    ]);
+    S.sessions  = sessRes.sessions || [];
+    S.lastReset = cfgRes.value || null;
     renderHistory();
   } catch {
     document.getElementById('historyList').innerHTML = empty('⚠️', 'Failed to load sessions');
@@ -1000,11 +903,7 @@ async function loadHistory() {
 
 function renderHistory() {
   const all = [...S.sessions].reverse();
-
-  const h2h   = all.filter(s =>
-    (s.Player1 === 'Chew' || s.Player2 === 'Chew') &&
-    (s.Player1 === 'Tan'  || s.Player2 === 'Tan')
-  );
+  const h2h   = all.filter(s => (s.Player1==='Chew'||s.Player2==='Chew') && (s.Player1==='Tan'||s.Player2==='Tan'));
   const chewW = h2h.filter(s => s.Winner === 'Chew').length;
   const tanW  = h2h.filter(s => s.Winner === 'Tan').length;
 
@@ -1014,10 +913,32 @@ function renderHistory() {
     <div class="stat-card"><div class="stat-val">${tanW}</div><div class="stat-lbl">Tan Wins</div></div>
   `;
 
-  if (all.length === 0) {
-    document.getElementById('historyList').innerHTML = empty('🎾', 'No sessions logged yet');
-    return;
+  // Running balance
+  const resetDate = S.lastReset ? new Date(S.lastReset) : null;
+  const balanceSessions = resetDate
+    ? S.sessions.filter(s => new Date(s.Date) > resetDate)
+    : S.sessions;
+  const totalBalance = balanceSessions.reduce((sum, s) => sum + sessionChewBalance(s), 0);
+  const bcCard = document.getElementById('balanceCard');
+  const bcAmt  = document.getElementById('balanceAmount');
+  const bcSince= document.getElementById('balanceSince');
+
+  if (balanceSessions.some(s => isChewVsTan(String(s.Player1), String(s.Player2)))) {
+    bcCard.style.display = 'block';
+    const sinceStr = resetDate ? 'Since ' + fmtDate(S.lastReset) : 'All time';
+    bcSince.textContent = sinceStr + ' · ' + balanceSessions.filter(s => isChewVsTan(String(s.Player1),String(s.Player2))).length + ' sessions';
+    if (totalBalance === 0) {
+      bcAmt.className = 'balance-amount settled'; bcAmt.textContent = '✅ All square';
+    } else if (totalBalance > 0) {
+      bcAmt.className = 'balance-amount'; bcAmt.textContent = 'Tan owes Chew $' + totalBalance;
+    } else {
+      bcAmt.className = 'balance-amount'; bcAmt.textContent = 'Chew owes Tan $' + Math.abs(totalBalance);
+    }
+  } else {
+    bcCard.style.display = 'none';
   }
+
+  if (all.length === 0) { document.getElementById('historyList').innerHTML = empty('🎾', 'No sessions logged yet'); return; }
 
   document.getElementById('historyList').innerHTML = all.map(s => {
     const chips = [
@@ -1025,36 +946,56 @@ function renderHistory() {
       s.Set2_P1 !== '' && s.Set2_P2 !== '' ? `<span class="chip">${s.Set2_P1}–${s.Set2_P2}</span>` : '',
       s.Set3_P1 !== '' && s.Set3_P2 !== '' ? `<span class="chip">${s.Set3_P1}–${s.Set3_P2}</span>` : ''
     ].join('');
-
-    const winChip = s.Winner && s.Winner !== 'Draw'
-      ? `<span class="chip-win">🏆 ${s.Winner}</span>` : '';
-
-    // Recalculate money from scores for display
-    const scores = [
-      { p1: Number(s.Set1_P1) || 0, p2: Number(s.Set1_P2) || 0 },
-      { p1: Number(s.Set2_P1) || 0, p2: Number(s.Set2_P2) || 0 },
-      { p1: Number(s.Set3_P1) || 0, p2: Number(s.Set3_P2) || 0 }
+    const winChip   = s.Winner && s.Winner !== 'Draw' ? `<span class="chip-win">🏆 ${s.Winner}</span>` : '';
+    const rainChip  = s.Rained === 'Yes' ? `<span class="chip-rain">🌧️ Rained</span>` : '';
+    const durChip   = s.Duration && Number(s.Duration) < 2 ? `<span class="chip-rain">⏱ ${s.Duration}hr</span>` : '';
+    const scores    = [
+      { p1: Number(s.Set1_P1)||0, p2: Number(s.Set1_P2)||0 },
+      { p1: Number(s.Set2_P1)||0, p2: Number(s.Set2_P2)||0 },
+      { p1: Number(s.Set3_P1)||0, p2: Number(s.Set3_P2)||0 }
     ];
-    const moneyMsg  = calcMoney(scores, s.Player1, s.Player2);
-    const moneyChip = moneyMsg && moneyMsg !== 'All square 💚'
-      ? `<span class="chip-money">💰 ${moneyMsg}</span>` : '';
-
-    const feels = [
-      s.Feeling1 ? s.Player1 + ': ' + s.Feeling1 : '',
-      s.Feeling2 ? s.Player2 + ': ' + s.Feeling2 : ''
-    ].filter(Boolean).join(' · ');
+    const moneyMsg  = calcMoneyDisplay(scores, String(s.Player1), String(s.Player2));
+    const moneyChip = moneyMsg && !moneyMsg.includes('square') ? `<span class="chip-money">💰 ${moneyMsg}</span>` : '';
+    const feels     = [s.Feeling1 ? s.Player1+': '+s.Feeling1 : '', s.Feeling2 ? s.Player2+': '+s.Feeling2 : ''].filter(Boolean).join(' · ');
+    const locLabel  = s.Location ? s.Location : '';
+    const subParts  = [locLabel, s.Duration ? s.Duration + 'hr' : ''].filter(Boolean);
 
     return `
       <div class="session-card">
         <div class="session-top">
-          <div class="session-players">${s.Player1} vs ${s.Player2}</div>
-          <div class="session-date">${fmtDate(s.Date)}</div>
+          <div class="session-meta">
+            <div class="session-players">${s.Player1} vs ${s.Player2}</div>
+            ${subParts.length ? '<div class="session-sub">' + subParts.join(' · ') + '</div>' : ''}
+          </div>
+          <div class="session-actions">
+            <div class="session-date">${fmtDate(s.Date)}</div>
+            <button class="del-btn" onclick="deleteSession('${s.ID}')" title="Delete">🗑</button>
+          </div>
         </div>
-        <div class="chips">${chips}${winChip}${moneyChip}</div>
+        <div class="chips">${chips}${winChip}${rainChip}${durChip}${moneyChip}</div>
         ${feels ? '<div class="session-feels">' + feels + '</div>' : ''}
       </div>
     `;
   }).join('');
+}
+
+async function deleteSession(id) {
+  if (!confirm('Delete this session? Cannot be undone.')) return;
+  try {
+    const res = await api('deleteSession', { id });
+    if (res.success) { toast('Session deleted', 'ok'); loadHistory(); }
+    else toast('Error: ' + (res.error || 'Failed'), 'err');
+  } catch { toast('Connection error', 'err'); }
+}
+
+async function settleUp() {
+  if (!confirm('Mark balance as settled? This resets the running total to $0 from today.')) return;
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const res   = await api('setConfig', { key: 'lastReset', value: today });
+    if (res.success) { toast('Balance settled ✓', 'ok'); loadHistory(); }
+    else toast('Error: ' + res.error, 'err');
+  } catch { toast('Connection error', 'err'); }
 }
 
 function fmtDate(d) {
@@ -1068,28 +1009,20 @@ function fmtDate(d) {
 // STRINGS PAGE
 // ============================================================
 async function loadStrings() {
-  if (!S.scriptUrl) {
-    document.getElementById('stringsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
-    return;
-  }
+  if (!S.scriptUrl) { document.getElementById('stringsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings'); return; }
   document.getElementById('stringsList').innerHTML = '<div class="loading">Loading…</div>';
   try {
     const res = await api('getRackets');
     S.rackets = res.rackets || [];
     renderStrings();
-  } catch {
-    document.getElementById('stringsList').innerHTML = empty('⚠️', 'Failed to load');
-  }
+  } catch { document.getElementById('stringsList').innerHTML = empty('⚠️', 'Failed to load'); }
 }
 
 function renderStrings() {
-  if (S.rackets.length === 0) {
-    document.getElementById('stringsList').innerHTML = empty('🎾', 'No rackets configured yet. Add them in the Rackets tab.');
-    return;
-  }
+  if (S.rackets.length === 0) { document.getElementById('stringsList').innerHTML = empty('🎾', 'No rackets configured yet. Add them in the Rackets tab.'); return; }
   document.getElementById('stringsList').innerHTML = S.rackets.map(r => {
-    const sess  = parseInt(r.SessionsSinceRestring) || 0;
-    const hrs   = sess * 2;
+    const sess  = parseFloat(r.SessionsSinceRestring) || 0;
+    const hrs   = Math.round(sess * 2 * 10) / 10;
     const thr   = parseInt(r.HoursThreshold) || 20;
     const pct   = Math.min(Math.round((hrs / thr) * 100), 100);
     const cls   = pct >= 100 ? 'p-red' : pct >= 75 ? 'p-yellow' : 'p-green';
@@ -1098,21 +1031,14 @@ function renderStrings() {
     return `
       <div class="rack-card">
         <div class="rack-top">
-          <div>
-            <div class="rack-name">${r.Name}</div>
-            <div class="rack-player">${r.Player}</div>
-          </div>
+          <div><div class="rack-name">${r.Name}</div><div class="rack-player">${r.Player}</div></div>
           <div style="font-size:0.75rem;color:var(--muted);">${badge}</div>
         </div>
-        <div class="rack-string">${r.String || 'String not specified'} &nbsp;·&nbsp; Restrung: ${rd}</div>
-        <div class="progress-wrap">
-          <div class="progress-fill ${cls}" style="width:${pct}%"></div>
-        </div>
+        <div class="rack-string">${r.String || 'String not specified'} · Restrung: ${rd}</div>
+        <div class="progress-wrap"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div>
         <div class="rack-footer">
           <div class="rack-hrs"><b>${hrs}h</b> / ${thr}h &nbsp;(${sess} sessions)</div>
-          <div class="rack-actions">
-            <button class="btn btn-secondary btn-sm" onclick="restringRacket('${r.ID}')">Restring</button>
-          </div>
+          <div class="rack-actions"><button class="btn btn-secondary btn-sm" onclick="restringRacket('${r.ID}')">Restring</button></div>
         </div>
       </div>
     `;
@@ -1120,15 +1046,12 @@ function renderStrings() {
 }
 
 async function restringRacket(id) {
-  if (!confirm('Mark as restrung? This resets the string timer to 0.')) return;
+  if (!confirm('Mark as restrung? Resets string timer to 0.')) return;
   const r = S.rackets.find(x => String(x.ID) === String(id));
   if (!r) return;
   const today = new Date().toISOString().split('T')[0];
   try {
-    const res = await api('updateRacket', { data: {
-      id: r.ID, player: r.Player, name: r.Name, string: r.String,
-      restringDate: today, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold
-    }});
+    const res = await api('updateRacket', { data: { id: r.ID, player: r.Player, name: r.Name, string: r.String, restringDate: today, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold } });
     if (res.success) { toast('Restrung! Timer reset 🎾', 'ok'); loadStrings(); }
     else toast('Error: ' + (res.error || 'Unknown'), 'err');
   } catch { toast('Connection error', 'err'); }
@@ -1139,40 +1062,27 @@ async function restringRacket(id) {
 // ============================================================
 function pickRackPlayer(val, btn) {
   document.querySelectorAll('#seg-rack-player .seg-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  S.rackPlayer = val;
+  btn.classList.add('on'); S.rackPlayer = val;
   document.getElementById('rackPlayerOther').style.display = val === 'Other' ? 'block' : 'none';
 }
 
 async function loadRackets() {
-  if (!S.scriptUrl) {
-    document.getElementById('racketsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings');
-    return;
-  }
+  if (!S.scriptUrl) { document.getElementById('racketsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings'); return; }
   try {
     const res = await api('getRackets');
     S.rackets = res.rackets || [];
-    renderRacketsList();
-    populateRackSelects();
-  } catch {
-    document.getElementById('racketsList').innerHTML = empty('⚠️', 'Failed to load');
-  }
+    renderRacketsList(); populateRackSelects();
+  } catch { document.getElementById('racketsList').innerHTML = empty('⚠️', 'Failed to load'); }
 }
 
 function renderRacketsList() {
-  if (S.rackets.length === 0) {
-    document.getElementById('racketsList').innerHTML = empty('🎾', 'No rackets yet — add one above');
-    return;
-  }
+  if (S.rackets.length === 0) { document.getElementById('racketsList').innerHTML = empty('🎾', 'No rackets yet — add one above'); return; }
   document.getElementById('racketsList').innerHTML = S.rackets.map(r => {
-    const hrs = (parseInt(r.SessionsSinceRestring) || 0) * 2;
+    const hrs = Math.round((parseFloat(r.SessionsSinceRestring) || 0) * 2 * 10) / 10;
     return `
       <div class="rack-card">
         <div class="rack-top">
-          <div>
-            <div class="rack-name">${r.Name}</div>
-            <div class="rack-player">${r.Player} &nbsp;·&nbsp; ${hrs}h on current strings &nbsp;·&nbsp; Alert at ${r.HoursThreshold}h</div>
-          </div>
+          <div><div class="rack-name">${r.Name}</div><div class="rack-player">${r.Player} · ${hrs}h on strings · Alert at ${r.HoursThreshold}h</div></div>
           <button class="btn btn-danger btn-sm" onclick="deleteRacket('${r.ID}')">Delete</button>
         </div>
         ${r.String ? '<div class="rack-string">' + r.String + '</div>' : ''}
@@ -1184,27 +1094,13 @@ function renderRacketsList() {
 async function doAddRacket() {
   if (!S.scriptUrl) { toast('Connect Google Sheets first', 'err'); return; }
   let player = S.rackPlayer;
-  if (player === 'Other') {
-    player = document.getElementById('rackPlayerOther').value.trim();
-    if (!player) { toast('Enter the player name', 'err'); return; }
-  }
+  if (player === 'Other') { player = document.getElementById('rackPlayerOther').value.trim(); if (!player) { toast('Enter player name', 'err'); return; } }
   const name = document.getElementById('rackName').value.trim();
-  if (!name) { toast('Enter a racket name / model', 'err'); return; }
-
+  if (!name) { toast('Enter a racket name', 'err'); return; }
   try {
-    const res = await api('addRacket', { data: {
-      id: genId(), player, name,
-      string             : document.getElementById('rackString').value.trim(),
-      restringDate       : document.getElementById('rackDate').value,
-      sessionsSinceRestring: 0,
-      hoursThreshold     : parseInt(document.getElementById('rackThreshold').value) || 20
-    }});
-    if (res.success) {
-      toast('Racket added!', 'ok');
-      document.getElementById('rackName').value   = '';
-      document.getElementById('rackString').value = '';
-      loadRackets();
-    } else toast('Error: ' + (res.error || 'Failed'), 'err');
+    const res = await api('addRacket', { data: { id: genId(), player, name, string: document.getElementById('rackString').value.trim(), restringDate: document.getElementById('rackDate').value, sessionsSinceRestring: 0, hoursThreshold: parseInt(document.getElementById('rackThreshold').value) || 20 } });
+    if (res.success) { toast('Racket added!', 'ok'); document.getElementById('rackName').value = ''; document.getElementById('rackString').value = ''; loadRackets(); }
+    else toast('Error: ' + (res.error || 'Failed'), 'err');
   } catch { toast('Connection error', 'err'); }
 }
 
@@ -1223,12 +1119,10 @@ async function deleteRacket(id) {
 async function saveSettings() {
   const url = document.getElementById('scriptUrlInput').value.trim();
   if (!url) { toast('Paste your Apps Script URL', 'err'); return; }
-  S.scriptUrl = url;
-  localStorage.setItem('tennisScriptUrl', url);
+  S.scriptUrl = url; localStorage.setItem('tennisScriptUrl', url);
   setConn('checking');
   const ok = await testConn();
-  if (ok) toast('Connected! 🎾', 'ok');
-  else     toast('Could not connect — check the URL', 'err');
+  toast(ok ? 'Connected! 🎾' : 'Could not connect — check the URL', ok ? 'ok' : 'err');
 }
 
 // ============================================================
@@ -1239,75 +1133,50 @@ async function exportToExcel() {
   toast('Fetching data…', '');
   try {
     const [sessRes, rackRes] = await Promise.all([api('getSessions'), api('getRackets')]);
-    const sessions = sessRes.sessions || [];
-    const rackets  = rackRes.rackets  || [];
-    const rackMap  = {};
-    rackets.forEach(r => { rackMap[r.ID] = r.Name; });
+    const sessions = sessRes.sessions || [], rackets = rackRes.rackets || [];
+    const rackMap  = {}; rackets.forEach(r => { rackMap[r.ID] = r.Name; });
 
     const sessRows = sessions.map(s => {
-      const scores = [
-        { p1: Number(s.Set1_P1) || 0, p2: Number(s.Set1_P2) || 0 },
-        { p1: Number(s.Set2_P1) || 0, p2: Number(s.Set2_P2) || 0 },
-        { p1: Number(s.Set3_P1) || 0, p2: Number(s.Set3_P2) || 0 }
-      ];
-      const money = calcMoney(scores, s.Player1, s.Player2);
+      const scores = [{ p1: Number(s.Set1_P1)||0, p2: Number(s.Set1_P2)||0 }, { p1: Number(s.Set2_P1)||0, p2: Number(s.Set2_P2)||0 }, { p1: Number(s.Set3_P1)||0, p2: Number(s.Set3_P2)||0 }];
       return {
-        'Date'           : s.Date,
-        'Player 1'       : s.Player1,
-        'Player 2'       : s.Player2,
-        'Set 1'          : s.Set1_P1 !== '' ? `${s.Set1_P1}–${s.Set1_P2}` : '',
-        'Set 2'          : s.Set2_P1 !== '' ? `${s.Set2_P1}–${s.Set2_P2}` : '',
-        'Set 3'          : s.Set3_P1 !== '' ? `${s.Set3_P1}–${s.Set3_P2}` : '',
-        'Winner'         : s.Winner,
-        'Money Result'   : money || '',
-        'P1 Racket'      : rackMap[s.Racket1] || s.Racket1 || '',
-        'P2 Racket'      : rackMap[s.Racket2] || s.Racket2 || '',
-        'P1 Feel'        : s.Feeling1,
-        'P2 Feel'        : s.Feeling2,
-        'Duration (hrs)' : s.Duration
+        'Date': s.Date, 'Player 1': s.Player1, 'Player 2': s.Player2,
+        'Location': s.Location || '', 'Rained': s.Rained || '', 'Duration (hrs)': s.Duration,
+        'Set 1': s.Set1_P1 !== '' ? `${s.Set1_P1}–${s.Set1_P2}` : '',
+        'Set 2': s.Set2_P1 !== '' ? `${s.Set2_P1}–${s.Set2_P2}` : '',
+        'Set 3': s.Set3_P1 !== '' ? `${s.Set3_P1}–${s.Set3_P2}` : '',
+        'Winner': s.Winner,
+        'Money': calcMoneyDisplay(scores, String(s.Player1), String(s.Player2)) || '',
+        'P1 Racket': rackMap[s.Racket1] || s.Racket1 || '',
+        'P2 Racket': rackMap[s.Racket2] || s.Racket2 || '',
+        'P1 Feel': s.Feeling1, 'P2 Feel': s.Feeling2
       };
     });
-
     const rackRows = rackets.map(r => ({
-      'Player'                 : r.Player,
-      'Racket'                 : r.Name,
-      'String'                 : r.String,
-      'Last Restring'          : r.RestringDate,
+      'Player': r.Player, 'Racket': r.Name, 'String': r.String,
+      'Last Restring': r.RestringDate,
       'Sessions Since Restring': r.SessionsSinceRestring,
-      'Hours on Strings'       : (parseInt(r.SessionsSinceRestring) || 0) * 2,
-      'Alert Threshold (hrs)'  : r.HoursThreshold
+      'Hours on Strings': Math.round((parseFloat(r.SessionsSinceRestring)||0) * 2 * 10) / 10,
+      'Alert Threshold (hrs)': r.HoursThreshold
     }));
 
-    const wb     = XLSX.utils.book_new();
-    const wsSess = XLSX.utils.json_to_sheet(sessRows.length > 0 ? sessRows : [{}]);
-    const wsRack = XLSX.utils.json_to_sheet(rackRows.length > 0 ? rackRows : [{}]);
-    XLSX.utils.book_append_sheet(wb, wsSess, 'Sessions');
-    XLSX.utils.book_append_sheet(wb, wsRack, 'Rackets');
-
-    const date = new Date().toISOString().split('T')[0];
-    XLSX.writeFile(wb, `tennis-board-${date}.xlsx`);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sessRows.length > 0 ? sessRows : [{}]), 'Sessions');
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rackRows.length > 0 ? rackRows : [{}]), 'Rackets');
+    XLSX.writeFile(wb, `tennis-board-${new Date().toISOString().split('T')[0]}.xlsx`);
     toast('Downloaded! 🎾', 'ok');
-  } catch (e) {
-    toast('Export failed: ' + e.message, 'err');
-  }
+  } catch (e) { toast('Export failed: ' + e.message, 'err'); }
 }
 
 // ============================================================
 // UTILITIES
 // ============================================================
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-}
-function empty(icon, msg) {
-  return `<div class="empty"><div class="empty-icon">${icon}</div>${msg}</div>`;
-}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function empty(icon, msg) { return `<div class="empty"><div class="empty-icon">${icon}</div>${msg}</div>`; }
 let _toastTimer;
 function toast(msg, type) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className   = 'toast show' + (type ? ' ' + type : '');
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+  el.textContent = msg; el.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(_toastTimer); _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
 // ============================================================
