@@ -981,10 +981,26 @@ function renderHistory() {
 
 async function deleteSession(id) {
   if (!confirm('Delete this session? Cannot be undone.')) return;
+
+  // Grab session data before deleting so we can subtract string hours
+  const session = S.sessions.find(s => String(s.ID) === String(id));
+
   try {
     const res = await api('deleteSession', { id });
-    if (res.success) { toast('Session deleted', 'ok'); loadHistory(); }
-    else toast('Error: ' + (res.error || 'Failed'), 'err');
+    if (!res.success) { toast('Error: ' + (res.error || 'Failed'), 'err'); return; }
+
+    // Subtract hours from rackets used in this session
+    if (session) {
+      const dur = Number(session.Duration) || 2;
+      const dec = -(dur === 1 ? 0.5 : 1); // negative = subtract
+      const r1  = String(session.Racket1 || '');
+      const r2  = String(session.Racket2 || '');
+      if (r1 && !r1.startsWith('default')) await api('incrementRacketSessions', { id: r1, amount: dec }).catch(() => {});
+      if (r2 && r2 !== r1 && !r2.startsWith('default')) await api('incrementRacketSessions', { id: r2, amount: dec }).catch(() => {});
+    }
+
+    toast('Session deleted', 'ok');
+    loadHistory();
   } catch { toast('Connection error', 'err'); }
 }
 
