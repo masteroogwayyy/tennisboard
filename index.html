@@ -246,9 +246,10 @@
     /* ---- Racket / String cards ---- */
     .rack-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 14px; margin-bottom: 10px; }
     .rack-top    { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-    .rack-name   { font-weight: 600; font-size: 0.92rem; }
-    .rack-player { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
-    .rack-string { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .rack-name        { font-weight: 600; font-size: 0.92rem; }
+    .rack-player-name { font-size: 1rem; font-weight: 700; color: var(--green); margin-top: 3px; }
+    .rack-player      { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .rack-string      { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
     .progress-wrap { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
     .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
     .p-green  { background: var(--green-mid); }
@@ -1047,7 +1048,7 @@ function renderStrings() {
     return `
       <div class="rack-card">
         <div class="rack-top">
-          <div><div class="rack-name">${r.Name}</div><div class="rack-player">${r.Player}</div></div>
+          <div><div class="rack-name">${r.Name}</div><div class="rack-player-name">${r.Player}</div></div>
           <div style="font-size:0.75rem;color:var(--muted);">${badge}</div>
         </div>
         <div class="rack-string">${r.String || 'String not specified'} · Restrung: ${rd}</div>
@@ -1098,7 +1099,7 @@ function renderRacketsList() {
     return `
       <div class="rack-card">
         <div class="rack-top">
-          <div><div class="rack-name">${r.Name}</div><div class="rack-player">${r.Player} · ${hrs}h on strings · Alert at ${r.HoursThreshold}h</div></div>
+          <div><div class="rack-name">${r.Name}</div><div class="rack-player-name">${r.Player}</div><div class="rack-player">${hrs}h on strings · Alert at ${r.HoursThreshold}h</div></div>
           <button class="btn btn-danger btn-sm" onclick="deleteRacket('${r.ID}')">Delete</button>
         </div>
         ${r.String ? '<div class="rack-string">' + r.String + '</div>' : ''}
