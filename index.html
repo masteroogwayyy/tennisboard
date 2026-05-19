@@ -527,6 +527,17 @@
       Money only calculated for Chew vs Tan matches on completed sets (≥6 games).
     </div>
   </div>
+  <div class="card" style="border-color:rgba(248,113,113,0.3);">
+    <div class="card-title" style="color:var(--red);">Danger Zone</div>
+    <div style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:12px;">
+      Permanently delete data from Google Sheets. Cannot be undone.
+    </div>
+    <div class="two-col" style="margin-bottom:8px;">
+      <button class="btn btn-danger" style="padding:10px;" onclick="clearData('sessions')">Clear Sessions</button>
+      <button class="btn btn-danger" style="padding:10px;" onclick="clearData('rackets')">Clear Rackets</button>
+    </div>
+    <button class="btn btn-danger" onclick="clearData('all')">🗑 Clear All Data</button>
+  </div>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -1029,17 +1040,36 @@ async function loadStrings() {
   if (!S.scriptUrl) { document.getElementById('stringsList').innerHTML = empty('📡', 'Connect Google Sheets in Settings'); return; }
   document.getElementById('stringsList').innerHTML = '<div class="loading">Loading…</div>';
   try {
-    const res = await api('getRackets');
-    S.rackets = res.rackets || [];
+    const [rackRes, sessRes] = await Promise.all([api('getRackets'), api('getSessions')]);
+    S.rackets  = rackRes.rackets  || [];
+    S.sessions = sessRes.sessions || [];
     renderStrings();
   } catch { document.getElementById('stringsList').innerHTML = empty('⚠️', 'Failed to load'); }
+}
+
+// Compute string hours directly from session history (avoids counter drift bugs)
+function computeStringHours(racketId, restringDate) {
+  const rid    = String(racketId);
+  const cutoff = restringDate ? new Date(restringDate + 'T00:00:00') : new Date(0);
+  let totalHrs = 0, count = 0;
+  (S.sessions || []).forEach(s => {
+    const r1 = String(s.Racket1 || '');
+    const r2 = String(s.Racket2 || '');
+    if (r1 !== rid && r2 !== rid) return;
+    const sDate = new Date(String(s.Date).split('T')[0] + 'T00:00:00');
+    if (sDate < cutoff) return;
+    totalHrs += Number(s.Duration) || 2;
+    count++;
+  });
+  return { hrs: totalHrs, count };
 }
 
 function renderStrings() {
   if (S.rackets.length === 0) { document.getElementById('stringsList').innerHTML = empty('🎾', 'No rackets configured yet. Add them in the Rackets tab.'); return; }
   document.getElementById('stringsList').innerHTML = S.rackets.map(r => {
-    const sess  = parseFloat(r.SessionsSinceRestring) || 0;
-    const hrs   = Math.round(sess * 2 * 10) / 10;
+    const computed = computeStringHours(r.ID, r.RestringDate);
+    const hrs  = computed.hrs;
+    const sess = computed.count;
     const thr   = parseInt(r.HoursThreshold) || 20;
     const pct   = Math.min(Math.round((hrs / thr) * 100), 100);
     const cls   = pct >= 100 ? 'p-red' : pct >= 75 ? 'p-yellow' : 'p-green';
@@ -1143,6 +1173,31 @@ async function saveSettings() {
 }
 
 // ============================================================
+// CLEAR DATA
+// ============================================================
+async function clearData(what) {
+  const labels = {
+    sessions: 'all session history',
+    rackets:  'all rackets',
+    all:      'ALL data — sessions, rackets and config'
+  };
+  const label = labels[what] || what;
+  if (!confirm(`Permanently delete ${label} from Google Sheets?\n\nThis cannot be undone.`)) return;
+  if (!confirm(`Last chance — delete ${label}?`)) return;
+  try {
+    toast('Deleting…', '');
+    const res = await api('clearData', { what });
+    if (res.success) {
+      if (what === 'sessions' || what === 'all') { S.sessions = []; S.lastReset = null; }
+      if (what === 'rackets'  || what === 'all') { S.rackets  = []; }
+      toast('Deleted ✓', 'ok');
+    } else {
+      toast('Error: ' + (res.error || 'Failed'), 'err');
+    }
+  } catch { toast('Connection error', 'err'); }
+}
+
+// ============================================================
 // EXPORT TO EXCEL
 // ============================================================
 async function exportToExcel() {
@@ -1168,13 +1223,33 @@ async function exportToExcel() {
         'P1 Feel': s.Feeling1, 'P2 Feel': s.Feeling2
       };
     });
-    const rackRows = rackets.map(r => ({
-      'Player': r.Player, 'Racket': r.Name, 'String': r.String,
-      'Last Restring': r.RestringDate,
-      'Sessions Since Restring': r.SessionsSinceRestring,
-      'Hours on Strings': Math.round((parseFloat(r.SessionsSinceRestring)||0) * 2 * 10) / 10,
-      'Alert Threshold (hrs)': r.HoursThreshold
-    }));
+    // Compute string hours from session history (same logic as Strings page)
+    function exportStringHours(racketId, restringDate) {
+      const rid    = String(racketId);
+      const cutoff = restringDate ? new Date(restringDate + 'T00:00:00') : new Date(0);
+      let totalHrs = 0, count = 0;
+      sessions.forEach(s => {
+        const r1 = String(s.Racket1 || '');
+        const r2 = String(s.Racket2 || '');
+        if (r1 !== rid && r2 !== rid) return;
+        const sDate = new Date(String(s.Date).split('T')[0] + 'T00:00:00');
+        if (sDate < cutoff) return;
+        totalHrs += Number(s.Duration) || 2;
+        count++;
+      });
+      return { hrs: totalHrs, count };
+    }
+
+    const rackRows = rackets.map(r => {
+      const sh = exportStringHours(r.ID, r.RestringDate);
+      return {
+        'Player': r.Player, 'Racket': r.Name, 'String': r.String,
+        'Last Restring': r.RestringDate,
+        'Sessions Since Restring': sh.count,
+        'Hours on Strings': sh.hrs,
+        'Alert Threshold (hrs)': r.HoursThreshold
+      };
+    });
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sessRows.length > 0 ? sessRows : [{}]), 'Sessions');
