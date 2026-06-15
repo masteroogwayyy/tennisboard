@@ -1095,7 +1095,7 @@ function renderStrings() {
 async function restringRacket(id) {
   if (!confirm('Mark as restrung? Resets string timer to 0.')) return;
   const r = S.rackets.find(x => String(x.ID) === String(id));
-  if (!r) return;
+  if (!r) { toast('Racket not found (id: ' + id + ')', 'err'); return; }
   const today = new Date().toISOString().split('T')[0];
   try {
     const res = await api('updateRacket', { data: { id: r.ID, player: r.Player, name: r.Name, string: r.String, restringDate: today, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold } });
