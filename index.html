@@ -279,6 +279,27 @@
     .toast.ok   { border-color: var(--green-mid); color: var(--green); }
     .toast.err  { border-color: var(--red); color: var(--red); }
 
+    /* ---- Modal ---- */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: flex-end; justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 0px));
+      width: 100%; max-width: 500px;
+      animation: modalUp 0.25s ease;
+    }
+    @keyframes modalUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .modal-sub   { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 16px; }
+
     /* ---- Empty / loading ---- */
     .empty      { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 0.85rem; }
     .empty-icon { font-size: 2.2rem; margin-bottom: 10px; }
@@ -537,6 +558,28 @@
       <button class="btn btn-danger" style="padding:10px;" onclick="clearData('rackets')">Clear Rackets</button>
     </div>
     <button class="btn btn-danger" onclick="clearData('all')">🗑 Clear All Data</button>
+  </div>
+</div>
+
+<!-- ===================== RESTRING MODAL ===================== -->
+<div class="modal-overlay" id="restringModal">
+  <div class="modal-box">
+    <div class="modal-title">Mark as Restrung</div>
+    <div class="modal-sub">Resets the string timer to 0 as of the date below.</div>
+
+    <div class="form-group">
+      <span class="label">String Used</span>
+      <input type="text" id="restringString" class="input" placeholder="e.g. Luxilon ALU Power 125">
+    </div>
+    <div class="form-group">
+      <span class="label">Restring Date</span>
+      <input type="date" id="restringDateInput" class="input">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeRestringModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmRestring()">Confirm</button>
+    </div>
   </div>
 </div>
 
@@ -1050,7 +1093,7 @@ async function loadStrings() {
 // Compute string hours directly from session history (avoids counter drift bugs)
 function computeStringHours(racketId, restringDate) {
   const rid    = String(racketId);
-  const cutoff = restringDate ? new Date(restringDate + 'T00:00:00') : new Date(0);
+  const cutoff = restringDate ? new Date(String(restringDate).split('T')[0] + 'T00:00:00') : new Date(0);
   let totalHrs = 0, count = 0;
   (S.sessions || []).forEach(s => {
     const r1 = String(s.Racket1 || '');
@@ -1092,13 +1135,33 @@ function renderStrings() {
   }).join('');
 }
 
-async function restringRacket(id) {
-  if (!confirm('Mark as restrung? Resets string timer to 0.')) return;
+let S_restringId = null;
+
+function restringRacket(id) {
   const r = S.rackets.find(x => String(x.ID) === String(id));
   if (!r) { toast('Racket not found (id: ' + id + ')', 'err'); return; }
-  const today = new Date().toISOString().split('T')[0];
+  S_restringId = id;
+  document.getElementById('restringString').value = r.String || '';
+  document.getElementById('restringDateInput').value = new Date().toISOString().split('T')[0];
+  document.getElementById('restringModal').classList.add('show');
+}
+
+function closeRestringModal() {
+  document.getElementById('restringModal').classList.remove('show');
+  S_restringId = null;
+}
+
+async function confirmRestring() {
+  const id = S_restringId;
+  const r = S.rackets.find(x => String(x.ID) === String(id));
+  if (!r) { closeRestringModal(); toast('Racket not found (id: ' + id + ')', 'err'); return; }
+
+  const stringVal = document.getElementById('restringString').value.trim();
+  const dateVal   = document.getElementById('restringDateInput').value || new Date().toISOString().split('T')[0];
+  closeRestringModal();
+
   try {
-    const res = await api('updateRacket', { data: { id: r.ID, player: r.Player, name: r.Name, string: r.String, restringDate: today, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold } });
+    const res = await api('updateRacket', { data: { id: r.ID, player: r.Player, name: r.Name, string: stringVal, restringDate: dateVal, sessionsSinceRestring: 0, hoursThreshold: r.HoursThreshold } });
     if (res.success) { toast('Restrung! Timer reset 🎾', 'ok'); loadStrings(); }
     else toast('Error: ' + (res.error || 'Unknown'), 'err');
   } catch { toast('Connection error', 'err'); }
@@ -1227,7 +1290,7 @@ async function exportToExcel() {
     // Compute string hours from session history (same logic as Strings page)
     function exportStringHours(racketId, restringDate) {
       const rid    = String(racketId);
-      const cutoff = restringDate ? new Date(restringDate + 'T00:00:00') : new Date(0);
+      const cutoff = restringDate ? new Date(String(restringDate).split('T')[0] + 'T00:00:00') : new Date(0);
       let totalHrs = 0, count = 0;
       sessions.forEach(s => {
         const r1 = String(s.Racket1 || '');
