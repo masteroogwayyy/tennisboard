@@ -1100,7 +1100,7 @@ function computeStringHours(racketId, restringDate) {
     const r2 = String(s.Racket2 || '');
     if (r1 !== rid && r2 !== rid) return;
     const sDate = new Date(String(s.Date).split('T')[0] + 'T00:00:00');
-    if (sDate < cutoff) return;
+    if (sDate <= cutoff) return;
     totalHrs += Number(s.Duration) || 2;
     count++;
   });
@@ -1297,7 +1297,7 @@ async function exportToExcel() {
         const r2 = String(s.Racket2 || '');
         if (r1 !== rid && r2 !== rid) return;
         const sDate = new Date(String(s.Date).split('T')[0] + 'T00:00:00');
-        if (sDate < cutoff) return;
+        if (sDate <= cutoff) return;
         totalHrs += Number(s.Duration) || 2;
         count++;
       });
